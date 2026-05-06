@@ -16,6 +16,19 @@ interface VisitorProfile {
   expires_at: string
 }
 
+function Byline() {
+  return (
+    <div className="flex items-center justify-center gap-3 mt-3">
+      <div className="h-px w-5 bg-neutral-800" />
+      <span className="text-xs text-neutral-800 tracking-widest font-mono">by</span>
+      <span className="text-xs font-black tracking-[0.3em] text-neutral-700 hover:text-neutral-500 transition-colors duration-300 font-mono">
+        ABYSSPROTOCOL
+      </span>
+      <div className="h-px w-5 bg-neutral-800" />
+    </div>
+  )
+}
+
 export default function IntakePage() {
   const router = useRouter()
   const [phase, setPhase] = useState<Phase>('checking')
@@ -29,38 +42,22 @@ export default function IntakePage() {
 
     async function checkPriorClearance() {
       const existingId = getVisitorId()
-      
       if (!existingId) {
-        if (mounted) {
-          setQuestions(getRandomQuestions(7))
-          setPhase('form')
-        }
+        if (mounted) { setQuestions(getRandomQuestions(7)); setPhase('form') }
         return
       }
-
       try {
         const r = await fetch(`/api/visitors?id=${existingId}`)
         if (!r.ok) throw new Error('expired')
         const data = await r.json()
-        
-        if (mounted) {
-          setProfile(data)
-          setPhase('resume')
-        }
+        if (mounted) { setProfile(data); setPhase('resume') }
       } catch {
-        if (mounted) {
-          clearVisitorId()
-          setQuestions(getRandomQuestions(7))
-          setPhase('form')
-        }
+        if (mounted) { clearVisitorId(); setQuestions(getRandomQuestions(7)); setPhase('form') }
       }
     }
 
     checkPriorClearance()
-
-    return () => {
-      mounted = false
-    }
+    return () => { mounted = false }
   }, [])
 
   function handleChange(key: string, value: string) {
@@ -72,15 +69,12 @@ export default function IntakePage() {
       const val = answers[q.key]
       return val && val.trim().length > 0
     })
-
     if (answered.length < 4) {
       setError('Minimum 4 fields required for profile generation. This is non-negotiable and also very lenient.')
       return
     }
-
     setError('')
     setPhase('processing')
-
     try {
       const res = await fetch('/api/visitors', {
         method: 'POST',
@@ -107,7 +101,7 @@ export default function IntakePage() {
     )
   }
 
-  // RESUME: returning visitor within 24hrs
+  // RESUME
   if (phase === 'resume' && profile) {
     return (
       <main className="min-h-screen bg-neutral-950 text-neutral-100 font-mono flex items-center justify-center p-6">
@@ -118,7 +112,6 @@ export default function IntakePage() {
             </div>
             <div className="text-xs text-neutral-600 tracking-widest uppercase mb-2">Your codename</div>
             <div className="text-3xl font-black text-yellow-400 tracking-wide mb-6">{profile.codename}</div>
-
             <div className="bg-neutral-900 border border-neutral-800 p-5 space-y-3">
               <div>
                 <div className="text-xs text-neutral-500 tracking-widest uppercase mb-1">Threat level</div>
@@ -130,7 +123,6 @@ export default function IntakePage() {
               </div>
             </div>
           </div>
-
           <div className="space-y-3">
             <button
               onClick={() => router.push('/compendium')}
@@ -151,10 +143,10 @@ export default function IntakePage() {
               This is not me. Generate a new profile.
             </button>
           </div>
-
           <div className="text-xs text-neutral-700 text-center">
             This profile exists for 24 hours, after which it will be destroyed entirely.
             This is not a metaphor. The data will simply be gone.
+            <Byline />
           </div>
         </div>
       </main>
@@ -186,10 +178,9 @@ export default function IntakePage() {
     )
   }
 
-  // PROFILE REVEAL: newly created
+  // PROFILE REVEAL
   if (phase === 'profile' && profile) {
     const summaryParagraphs = profile.profile_summary.split('\n\n').filter(Boolean)
-
     return (
       <main className="min-h-screen bg-neutral-950 text-neutral-100 font-mono p-6 flex items-start justify-center">
         <div className="max-w-xl w-full pt-10 space-y-8">
@@ -203,7 +194,6 @@ export default function IntakePage() {
             </div>
             <div className="text-xs text-neutral-600">Profile self-destructs in 24 hours from this moment.</div>
           </div>
-
           <div className="grid grid-cols-2 gap-3">
             <div className="bg-neutral-900 border border-neutral-800 p-4">
               <div className="text-xs text-neutral-500 tracking-widest uppercase mb-2">Threat level</div>
@@ -214,7 +204,6 @@ export default function IntakePage() {
               <div className="text-sm text-neutral-400 leading-snug">{profile.assigned_section}</div>
             </div>
           </div>
-
           <div className="border border-neutral-800 p-6 space-y-4">
             <div className="text-xs text-neutral-500 tracking-widest uppercase">Behavioral assessment</div>
             {summaryParagraphs.map((para: string, i: number) => (
@@ -232,7 +221,6 @@ export default function IntakePage() {
               </p>
             ))}
           </div>
-
           <div className="space-y-3">
             <button
               onClick={() => router.push('/compendium')}
@@ -243,6 +231,7 @@ export default function IntakePage() {
             <div className="text-xs text-neutral-700 text-center">
               All intake data expires in 24 hours. We retain nothing.
               This was always going to be true.
+              <Byline />
             </div>
           </div>
         </div>
@@ -264,14 +253,12 @@ export default function IntakePage() {
           and serves no purpose beyond existing. You will not be asked to remember it.
           It will not follow you. You have our word, which means very little.
         </p>
-
         <div className="space-y-8">
           {questions.map(q => (
             <div key={q.key}>
               <label className="block text-xs tracking-widest text-neutral-400 uppercase mb-3 leading-relaxed">
                 {q.label}
               </label>
-
               {q.type === 'freetext' ? (
                 <input
                   type="text"
@@ -293,14 +280,10 @@ export default function IntakePage() {
                     >
                       <div
                         className={`w-4 h-4 border shrink-0 mt-0.5 flex items-center justify-center ${
-                          answers[q.key] === opt.value
-                            ? 'border-white bg-white'
-                            : 'border-neutral-600'
+                          answers[q.key] === opt.value ? 'border-white bg-white' : 'border-neutral-600'
                         }`}
                       >
-                        {answers[q.key] === opt.value && (
-                          <div className="w-2 h-2 bg-black" />
-                        )}
+                        {answers[q.key] === opt.value && <div className="w-2 h-2 bg-black" />}
                       </div>
                       <input
                         type="radio"
@@ -317,11 +300,9 @@ export default function IntakePage() {
               )}
             </div>
           ))}
-
           {error && (
             <div className="text-red-400 text-xs tracking-wider">{error}</div>
           )}
-
           <div className="pt-4 space-y-3">
             <button
               onClick={handleSubmit}
@@ -331,6 +312,7 @@ export default function IntakePage() {
             </button>
             <div className="text-xs text-neutral-700 text-center">
               By submitting you confirm you have read nothing above and are proceeding anyway.
+              <Byline />
             </div>
           </div>
         </div>

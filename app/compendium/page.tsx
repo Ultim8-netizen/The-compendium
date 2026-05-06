@@ -47,9 +47,17 @@ export default function CompendiumPage() {
           ))}
         </div>
 
-        <div className="mt-12 pt-6 border-t border-neutral-900 text-xs text-neutral-700 text-center tracking-wider">
+        <div className="mt-12 pt-6 border-t border-neutral-900 text-xs text-neutral-700 text-center tracking-wider leading-loose">
           All profiles collected at entry expire within 24 hours. We keep none of it.
           This was always going to be true.
+          <div className="mt-4 flex items-center justify-center gap-3">
+            <div className="h-px w-6 bg-neutral-800" />
+            <span className="text-neutral-800 tracking-widest">by</span>
+            <span className="text-neutral-600 font-black tracking-[0.3em] text-xs hover:text-neutral-400 transition-colors duration-300">
+              ABYSSPROTOCOL
+            </span>
+            <div className="h-px w-6 bg-neutral-800" />
+          </div>
         </div>
       </div>
     </main>
