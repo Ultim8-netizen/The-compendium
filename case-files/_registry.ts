@@ -38,4 +38,13 @@ export const CASE_FILES: CaseFileMeta[] = [
     threatLevel: 'CRITICAL',
     tags: ['academic survival', 'field manual', 'mental escape'],
   },
+  {
+    slug: 'cndd',
+    title: 'Curriculum Compliance Audit No. 41',
+    subtitle: 'Chronic Narrative Divergence Disorder in Active Teaching Personnel',
+    classificationCode: 'OCINC/UBD-2026/0041',
+    department: 'Office of Curricular Integrity & Narrative Containment',
+    threatLevel: 'TERMINAL',
+    tags: ['clinical', 'academic', 'biographical containment'],
+  },
 ]
