@@ -1,3 +1,5 @@
+// _registry.ts
+
 export interface CaseFileMeta {
   slug: string
   title: string
@@ -26,5 +28,14 @@ export const CASE_FILES: CaseFileMeta[] = [
     department: 'Dept. of Intergenerational Humor Trauma',
     threatLevel: 'TERMINAL',
     tags: ['clinical', 'dad jokes', 'facility placement'],
+  },
+  {
+    slug: 'boring-class-survival-guide',
+    title: 'The Boring Class Survival Manual',
+    subtitle: 'Surviving an Excruciatingly Boring Class',
+    classificationCode: 'DAE-3RD-ED',
+    department: 'Dept. of Academic Endurance',
+    threatLevel: 'CRITICAL',
+    tags: ['academic survival', 'field manual', 'mental escape'],
   },
 ]
