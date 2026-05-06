@@ -1,3 +1,4 @@
+// app/compendium/[slug]/page.tsx
 import { CASE_FILES } from '@/case-files/_registry'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
@@ -9,13 +10,14 @@ export async function generateStaticParams() {
 export default async function CaseFilePage({
   params,
 }: {
-  params: { slug: string }
+  params: Promise<{ slug: string }>
 }) {
-  const meta = CASE_FILES.find(f => f.slug === params.slug)
+  const { slug } = await params
+
+  const meta = CASE_FILES.find(f => f.slug === slug)
   if (!meta) return notFound()
 
-  // Dynamic import so each file is only loaded when needed
-  const { default: CaseFileComponent } = await import(`@/case-files/${params.slug}`)
+  const { default: CaseFileComponent } = await import(`@/case-files/${slug}`)
 
   return (
     <main className="min-h-screen bg-neutral-100 font-mono">
