@@ -16,11 +16,19 @@ const QUESTIONS = [
 
 type Phase = 'form' | 'processing' | 'profile'
 
+interface VisitorProfile {
+  id: string
+  codename: string
+  threat_level: string
+  assigned_section: string
+  profile_summary: string
+}
+
 export default function IntakePage() {
   const router = useRouter()
   const [answers, setAnswers] = useState<Record<string, string>>({})
   const [phase, setPhase] = useState<Phase>('form')
-  const [profile, setProfile] = useState<any>(null)
+  const [profile, setProfile] = useState<VisitorProfile | null>(null)
   const [error, setError] = useState('')
 
   function handleChange(key: string, value: string) {
@@ -47,7 +55,7 @@ export default function IntakePage() {
       setVisitorId(data.id)
       setProfile(data)
       setPhase('profile')
-    } catch (e: any) {
+    } catch {
       setPhase('form')
       setError('Processing failed. The system blames you specifically.')
     }
