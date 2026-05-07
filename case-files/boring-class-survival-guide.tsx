@@ -9,6 +9,7 @@ export const meta: CaseFileMeta = {
   department: 'Dept. of Academic Endurance',
   threatLevel: 'CRITICAL',
   tags: ['academic survival', 'field manual', 'mental escape'],
+  excerpt: 'You are not here to learn. You are here to endure. The notebook is a prop. Both of these things are lies, but comfortable ones.',
 }
 
 export default function BoringClassSurvivalGuideFile() {
