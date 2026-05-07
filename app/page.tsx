@@ -70,10 +70,7 @@ export default function LandingPage() {
           pointer-events: none;
         }
 
-        .lp-inner {
-          width: 100%;
-          max-width: 600px;
-        }
+        .lp-inner { width: 100%; max-width: 600px; }
 
         .lp-hook {
           font-size: 11px;
@@ -102,11 +99,7 @@ export default function LandingPage() {
         .lp-pitch strong { color: #ccc; font-weight: 700; }
         .lp-pitch em { color: #555; font-style: normal; }
 
-        .lp-divider {
-          height: 1px;
-          background: #161616;
-          margin-bottom: 40px;
-        }
+        .lp-divider { height: 1px; background: #161616; margin-bottom: 40px; }
 
         .lp-section-label {
           font-size: 9px;
@@ -116,11 +109,7 @@ export default function LandingPage() {
           margin-bottom: 20px;
         }
 
-        .lp-files {
-          display: flex;
-          flex-direction: column;
-          margin-bottom: 12px;
-        }
+        .lp-files { display: flex; flex-direction: column; margin-bottom: 12px; }
 
         .lp-file {
           border-bottom: 1px solid #111;
@@ -155,15 +144,14 @@ export default function LandingPage() {
           font-size: 12px;
           font-weight: 700;
           color: #aaa;
-          margin-bottom: 8px;
+          margin-bottom: 4px;
           line-height: 1.4;
         }
 
-        .lp-file-excerpt {
-          font-size: 12px;
-          line-height: 1.85;
-          color: #4a4a4a;
-          font-style: italic;
+        .lp-file-subtitle {
+          font-size: 11px;
+          line-height: 1.6;
+          color: #3a3a3a;
         }
 
         .lp-more {
@@ -176,11 +164,7 @@ export default function LandingPage() {
           padding-top: 14px;
         }
 
-        .lp-steps {
-          display: flex;
-          flex-direction: column;
-          margin-bottom: 48px;
-        }
+        .lp-steps { display: flex; flex-direction: column; margin-bottom: 48px; }
 
         .lp-step {
           display: grid;
@@ -192,24 +176,10 @@ export default function LandingPage() {
         }
         .lp-step:first-child { border-top: 1px solid #111; }
 
-        .lp-step-num {
-          font-size: 10px;
-          font-weight: 900;
-          color: #facc15;
-          margin-top: 2px;
-        }
+        .lp-step-num { font-size: 10px; font-weight: 900; color: #facc15; margin-top: 2px; }
 
-        .lp-step-body {
-          font-size: 13px;
-          line-height: 1.85;
-          color: #555;
-        }
-        .lp-step-body strong {
-          color: #aaa;
-          font-weight: 700;
-          display: block;
-          margin-bottom: 4px;
-        }
+        .lp-step-body { font-size: 13px; line-height: 1.85; color: #555; }
+        .lp-step-body strong { color: #aaa; font-weight: 700; display: block; margin-bottom: 4px; }
 
         .lp-profile-box {
           border: 1px solid #161616;
@@ -218,48 +188,14 @@ export default function LandingPage() {
           background: #0d0d0d;
         }
 
-        .lp-profile-label {
-          font-size: 9px;
-          letter-spacing: 3px;
-          text-transform: uppercase;
-          color: #2a2a2a;
-          margin-bottom: 14px;
-        }
+        .lp-profile-label { font-size: 9px; letter-spacing: 3px; text-transform: uppercase; color: #2a2a2a; margin-bottom: 14px; }
+        .lp-profile-codename { font-size: 20px; font-weight: 900; color: #facc15; letter-spacing: 1px; margin-bottom: 16px; }
 
-        .lp-profile-codename {
-          font-size: 20px;
-          font-weight: 900;
-          color: #facc15;
-          letter-spacing: 1px;
-          margin-bottom: 16px;
-        }
+        .lp-profile-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
 
-        .lp-profile-grid {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 10px;
-          margin-bottom: 16px;
-        }
-
-        .lp-profile-field {
-          background: #0a0a0a;
-          border: 1px solid #161616;
-          padding: 10px 12px;
-        }
-
-        .lp-profile-field-label {
-          font-size: 9px;
-          letter-spacing: 2px;
-          text-transform: uppercase;
-          color: #2e2e2e;
-          margin-bottom: 5px;
-        }
-
-        .lp-profile-field-value {
-          font-size: 11px;
-          color: #555;
-          line-height: 1.6;
-        }
+        .lp-profile-field { background: #0a0a0a; border: 1px solid #161616; padding: 10px 12px; }
+        .lp-profile-field-label { font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: #2e2e2e; margin-bottom: 5px; }
+        .lp-profile-field-value { font-size: 11px; color: #555; line-height: 1.6; }
 
         .lp-profile-note {
           font-size: 11px;
@@ -310,30 +246,12 @@ export default function LandingPage() {
           animation: lp-blink 1.1s step-end infinite;
         }
 
-        .lp-fine {
-          font-size: 10px;
-          color: #242424;
-          text-align: center;
-          line-height: 1.9;
-          letter-spacing: 0.5px;
-        }
+        .lp-fine { font-size: 10px; color: #242424; text-align: center; line-height: 1.9; letter-spacing: 0.5px; }
 
-        .lp-byline {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: 10px;
-          margin-top: 44px;
-        }
+        .lp-byline { display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 44px; }
         .lp-byline-line { height: 1px; width: 20px; background: #161616; }
         .lp-byline-by { font-size: 9px; color: #222; letter-spacing: 3px; }
-        .lp-byline-name {
-          font-size: 10px;
-          font-weight: 900;
-          color: #2a2a2a;
-          letter-spacing: 4px;
-          transition: color 0.3s;
-        }
+        .lp-byline-name { font-size: 10px; font-weight: 900; color: #2a2a2a; letter-spacing: 4px; transition: color 0.3s; }
         .lp-byline-name:hover { color: #555; }
 
         @media (max-width: 480px) {
@@ -345,9 +263,7 @@ export default function LandingPage() {
       <div className={`lp-root${exiting ? ' exiting' : ''}`}>
         <div className="lp-inner">
 
-          <div className="lp-hook">
-            Hello there. Yes, you. You never learn, do you.
-          </div>
+          <div className="lp-hook">Hello there. Yes, you. You never learn, do you.</div>
 
           <div className="lp-title">THE<br />COMPENDIUM</div>
 
@@ -366,16 +282,13 @@ export default function LandingPage() {
           <div className="lp-files">
             {sample.map(file => (
               <div className="lp-file" key={file.slug}>
-                <div
-                  className="lp-file-tag"
-                  style={THREAT_COLOR[file.threatLevel]}
-                >
+                <div className="lp-file-tag" style={THREAT_COLOR[file.threatLevel]}>
                   {file.threatLevel}
                 </div>
                 <div>
                   <div className="lp-file-dept">{file.department}</div>
                   <div className="lp-file-title">{file.title}</div>
-                  <div className="lp-file-excerpt">&ldquo;{file.excerpt}&rdquo;</div>
+                  <div className="lp-file-subtitle">{file.subtitle}</div>
                 </div>
               </div>
             ))}

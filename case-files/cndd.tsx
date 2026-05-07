@@ -399,8 +399,6 @@ export default function CnddFile() {
       `}</style>
 
       <div className="cndd-wrap">
-
-        {/* Header */}
         <div className="crest-bar">
           <div className="crest">⛢</div>
           <div className="crest-text">
@@ -409,7 +407,6 @@ export default function CnddFile() {
           </div>
         </div>
 
-        {/* Meta bar */}
         <div className="meta-bar">
           <div className="meta-pill">REF: <span>OCINC/UBD-2026/0041</span></div>
           <div className="meta-pill">CLASSIFICATION: <span>INTERNAL USE, WIDE CIRCULATION</span></div>
@@ -418,8 +415,6 @@ export default function CnddFile() {
         </div>
 
         <div className="body">
-
-          {/* Title block */}
           <div className="doc-title-block">
             <div className="violation-stamp">NON-COMPLIANT</div>
             <div className="doc-type">Formal Curriculum Compliance Review</div>
@@ -431,7 +426,6 @@ export default function CnddFile() {
             </div>
           </div>
 
-          {/* Severity */}
           <div className="severity-dots">
             <div className="sev-dot" style={{ background: '#2e7d32' }} />
             <div className="sev-dot" style={{ background: '#2e7d32' }} />
@@ -441,7 +435,6 @@ export default function CnddFile() {
             <span className="dot-label">Severity Index: CRITICAL BIOGRAPHICAL</span>
           </div>
 
-          {/* Section 1 */}
           <div className="section-head">Section 1 &mdash; Summary of Violation</div>
           <div className="body-text">
             The subject presents as a member of academic teaching staff assigned to deliver structured instruction on a documented syllabus. In practice, the subject operates as an oral historian with institutional access to a captive audience. Curriculum delivery, where it occurs at all, functions as a transitional device between personal anecdotes. Students arrive expecting instruction. They leave knowing the subject&apos;s mother&apos;s maiden name, the specific year the subject&apos;s uncle made a poor financial decision, and at least one detail about a childhood dog that did not survive the decade.
@@ -454,7 +447,6 @@ export default function CnddFile() {
             </div>
           </div>
 
-          {/* Section 2 — Time chart */}
           <div className="section-head">Section 2 &mdash; Lecture Time Allocation (Audit Period: One Semester)</div>
           <div className="body-text" style={{ marginBottom: '0.75rem' }}>
             The following represents verified time usage across 28 observed lecture sessions, 90 minutes each, 2,520 minutes total.
@@ -479,7 +471,6 @@ export default function CnddFile() {
             ))}
           </div>
 
-          {/* Section 3 — Lineage table */}
           <div className="section-head">Section 3 &mdash; Genealogical Disclosure Index (Involuntary, Per Semester)</div>
           <div className="body-text" style={{ marginBottom: '0.75rem' }}>
             The following family members were disclosed to students enrolled in a course on <span className="redact">redacted</span>. No portion of this information appeared on any examination or contributed to any learning outcome.
@@ -546,59 +537,37 @@ export default function CnddFile() {
             </tbody>
           </table>
 
-          {/* Section 4 + 5 */}
           <div className="two-col" style={{ marginTop: '1.5rem' }}>
             <div>
               <div className="section-head">Section 4 &mdash; Documented Narrative Archetypes</div>
               {[
-                {
-                  title: 'The Origin Story.',
-                  body: 'A 12 to 20 minute account of how the subject came to be in this field. Delivered in Week 1, then again in Week 6 to the students who missed Week 1, and once more in Week 11 for reasons that remain unclear.',
-                },
-                {
-                  title: 'The Better Era Invocation.',
-                  body: 'A structured argument that things were different before, specifically better, and that current students cannot appreciate the difficulty of conditions under which the subject formed their entire worldview.',
-                },
-                {
-                  title: 'The Parallel Life Disclosure.',
-                  body: 'A branch in the narrative where the subject describes the career they almost had. The alternative career is always more interesting than the current one. The subject has mixed feelings about this.',
-                },
-                {
-                  title: 'The Formative Struggle.',
-                  body: 'A period of documented personal adversity, told with enough specificity to function as memoir, inserted during a lecture on something completely unrelated to adversity.',
-                },
-                {
-                  title: 'The Unsolicited Character Reference.',
-                  body: 'An extended account of a person who shaped the subject, delivered with the full authority of someone who has been waiting years to be asked and has now simply stopped waiting.',
-                },
+                { title: 'The Origin Story.', body: 'A 12 to 20 minute account of how the subject came to be in this field. Delivered in Week 1, then again in Week 6 to the students who missed Week 1, and once more in Week 11 for reasons that remain unclear.' },
+                { title: 'The Better Era Invocation.', body: 'A structured argument that things were different before, specifically better, and that current students cannot appreciate the difficulty of conditions under which the subject formed their entire worldview.' },
+                { title: 'The Parallel Life Disclosure.', body: 'A branch in the narrative where the subject describes the career they almost had. The alternative career is always more interesting than the current one. The subject has mixed feelings about this.' },
+                { title: 'The Formative Struggle.', body: 'A period of documented personal adversity, told with enough specificity to function as memoir, inserted during a lecture on something completely unrelated to adversity.' },
+                { title: 'The Unsolicited Character Reference.', body: 'An extended account of a person who shaped the subject, delivered with the full authority of someone who has been waiting years to be asked and has now simply stopped waiting.' },
               ].map((item, i) => (
                 <div className="finding-item" key={i}>
                   <div className="finding-num">{i + 1}</div>
-                  <div className="finding-text">
-                    <strong>{item.title}</strong> {item.body}
-                  </div>
+                  <div className="finding-text"><strong>{item.title}</strong> {item.body}</div>
                 </div>
               ))}
             </div>
 
             <div>
               <div className="section-head">Section 5 &mdash; Student Impact Assessment</div>
-
               <div className="quote-block">
                 &ldquo;I know he was born near a river. I do not know what the course is called. The exam is in three weeks.&rdquo;
                 <cite>Anonymous student, Course <span className="redact">redacted</span>, Semester 2</cite>
               </div>
-
               <div className="quote-block">
                 &ldquo;By Week 8 I could have written his biography. I could not have written a paragraph about the subject matter. The two facts sit next to each other in my notebook.&rdquo;
                 <cite>Anonymous student, same course, different year</cite>
               </div>
-
               <div className="quote-block">
                 &ldquo;He said this would be relevant later. It was Week 3. We are now in Week 14. The relevance has not arrived. I am still watching for it.&rdquo;
                 <cite>Anonymous student, submitted formally, with no apparent urgency</cite>
               </div>
-
               <div className="info">
                 <div className="info-head">ℹ Academic Outcome Note</div>
                 <div className="info-text">
@@ -608,7 +577,6 @@ export default function CnddFile() {
             </div>
           </div>
 
-          {/* Section 6 */}
           <div className="section-head">Section 6 &mdash; The Transition Mechanism</div>
           <div className="body-text">
             Of particular clinical interest is the subject&apos;s ability to navigate from any syllabus topic to a personal memory with what colleagues have described as &ldquo;invisible infrastructure.&rdquo; No seam is visible in the delivery. The subject begins with a concept. The concept reminds them of a period. The period introduces a person. The person has a story. The story has a moral. The moral circles back toward the original concept but does not arrive. The lecture ends. No student is certain whether this was intentional.
@@ -621,30 +589,13 @@ export default function CnddFile() {
             </div>
           </div>
 
-          {/* Section 7 */}
           <div className="section-head">Section 7 &mdash; Recommended Containment Protocols (Student Field Manual)</div>
-
           {[
-            {
-              tag: 'PROTOCOL A',
-              body: <><strong>Pre-emptive question deployment.</strong> Ask a specific course-related question in the first four minutes before the subject locates their own entry point into personal history. A well-placed question forces a brief return to the syllabus. The window is narrow. It is the only window.</>,
-            },
-            {
-              tag: 'PROTOCOL B',
-              body: <><strong>Strategic note-taking display.</strong> Open the notebook visibly at the start of the narrative. Write something. Write anything. The performance of note-taking has, in isolated cases, caused the subject to briefly believe they are on syllabus content and accelerate toward it. Success rate: low. Attempt anyway.</>,
-            },
-            {
-              tag: 'PROTOCOL C',
-              body: <><strong>Parallel operation mode.</strong> Accept that the lecture will not cover what it is supposed to cover. Open the textbook. Read the textbook. Maintain an expression of engagement. The subject will not distinguish between a student following the narrative and a student reading about something else entirely, as long as the posture is forward-facing and the nodding is periodic.</>,
-            },
-            {
-              tag: 'PROTOCOL D',
-              body: <><strong>Active genealogy logging.</strong> Maintain a running family tree in the margin of your notes. Cross-reference across sessions. By the end of semester, a complete diagram will be available. This information will not help you pass. It will, however, be more accurate and detailed than anything else in the notebook.</>,
-            },
-            {
-              tag: 'OMEGA',
-              body: <><strong>Ask them directly how they ended up here.</strong> Reserved as a last resort in the final lecture of semester only. This question will consume the remaining session in its entirety. However, by the final lecture, the semester is over. The sacrifice is proportional. Several students have used this strategically to avoid a summary quiz. It has worked every time. The subject did not notice. The subject was talking.</>,
-            },
+            { tag: 'PROTOCOL A', body: <><strong>Pre-emptive question deployment.</strong> Ask a specific course-related question in the first four minutes before the subject locates their own entry point into personal history. A well-placed question forces a brief return to the syllabus. The window is narrow. It is the only window.</> },
+            { tag: 'PROTOCOL B', body: <><strong>Strategic note-taking display.</strong> Open the notebook visibly at the start of the narrative. Write something. Write anything. The performance of note-taking has, in isolated cases, caused the subject to briefly believe they are on syllabus content and accelerate toward it. Success rate: low. Attempt anyway.</> },
+            { tag: 'PROTOCOL C', body: <><strong>Parallel operation mode.</strong> Accept that the lecture will not cover what it is supposed to cover. Open the textbook. Read the textbook. Maintain an expression of engagement. The subject will not distinguish between a student following the narrative and a student reading about something else entirely, as long as the posture is forward-facing and the nodding is periodic.</> },
+            { tag: 'PROTOCOL D', body: <><strong>Active genealogy logging.</strong> Maintain a running family tree in the margin of your notes. Cross-reference across sessions. By the end of semester, a complete diagram will be available. This information will not help you pass. It will, however, be more accurate and detailed than anything else in the notebook.</> },
+            { tag: 'OMEGA', body: <><strong>Ask them directly how they ended up here.</strong> Reserved as a last resort in the final lecture of semester only. This question will consume the remaining session in its entirety. However, by the final lecture, the semester is over. The sacrifice is proportional. Several students have used this strategically to avoid a summary quiz. It has worked every time. The subject did not notice. The subject was talking.</> },
           ].map(p => (
             <div className="protocol-item" key={p.tag}>
               <div className="protocol-tag">{p.tag}</div>
@@ -652,7 +603,6 @@ export default function CnddFile() {
             </div>
           ))}
 
-          {/* Section 8 */}
           <div className="section-head">Section 8 &mdash; Formal Recommendation</div>
           <div className="body-text">
             This office does not recommend termination or disciplinary action. The subject, in a different context, would be a compelling and valued oral historian. The issue is not the content. The issue is the venue and the captive audience who paid tuition expecting instruction on a different subject entirely. The office recommends a formal reallocation of the subject to a department better suited to their output, specifically any department whose curriculum is defined as &ldquo;the life and times of <span className="redact">redacted</span>.&rdquo; No such department currently exists. This office has filed a proposal. It is pending review. In the meantime, the lectures continue.
@@ -664,16 +614,13 @@ export default function CnddFile() {
               The committee wishes to note that the subject, upon being informed of this review, did not dispute the findings. They asked if the committee had heard about how they first got into academia. The meeting was scheduled for 45 minutes. It lasted two and a half hours. The committee now knows about the river.
             </div>
           </div>
-
         </div>
 
-        {/* Footer */}
         <div className="footnote-bar">
           <span>OCINC/UBD-2026/0041 &nbsp;|&nbsp; Office of Curricular Integrity</span>
           <span>The family tree is available as a supplementary appendix on request</span>
           <span>The dog&apos;s name was <span style={{ color: '#d4a84b' }}>redacted</span></span>
         </div>
-
       </div>
     </>
   )

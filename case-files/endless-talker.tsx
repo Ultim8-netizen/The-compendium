@@ -45,9 +45,7 @@ export default function EndlessTalkerFile() {
 
       <div className="doc-wrap">
         <div className="watermark">CLASSIFIED</div>
-
         <div className="content-z">
-
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '8px', marginBottom: '0.5rem' }}>
             <div className="stamp classified">TOP SECRET // EYES ONLY</div>
             <div style={{ fontSize: '10px', textAlign: 'right', color: '#888', lineHeight: 1.6 }}>
@@ -101,7 +99,6 @@ export default function EndlessTalkerFile() {
           <div className="section-body">
             The following techniques are listed in order of escalating desperation. Begin at Protocol ALPHA. Progress only if previous protocol has failed.
           </div>
-
           <div className="phase-item" style={{ marginTop: '0.75rem' }}><div className="phase-num">1</div><div className="phase-text"><strong>Protocol ALPHA &mdash; The False Departure.</strong> Announce a destination. &quot;I have to get some water.&quot; Begin moving. Do not stop moving. The kitchen was never the destination. You are now outside.</div></div>
           <div className="phase-item"><div className="phase-num">2</div><div className="phase-text"><strong>Protocol BETA &mdash; The Phantom Vibration.</strong> Look at phone. Furrow brow with controlled urgency. Say &quot;oh no&quot; under breath. This works approximately <span className="redact">62</span>% of the time. In the remaining cases the subject will ask what happened and the conversation will restart from the beginning about someone else entirely.</div></div>
           <div className="phase-item"><div className="phase-num">3</div><div className="phase-text"><strong>Protocol GAMMA &mdash; Conversational Judo.</strong> Identify a third person across the room. Say &quot;oh, I actually need to quickly speak to <span className="redact">REDACTED</span> before they leave.&quot; Walk toward that person. That person is a casualty of war. Brief them later.</div></div>
@@ -134,7 +131,6 @@ export default function EndlessTalkerFile() {
             <span>DESTROY AFTER MEMORIZATION</span>
             <span>PAGE 1 OF 1 (THERE IS NO PAGE 2. LEAVE.)</span>
           </div>
-
         </div>
       </div>
     </>
