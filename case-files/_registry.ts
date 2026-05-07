@@ -45,4 +45,22 @@ export const CASE_FILES: CaseFileMeta[] = [
     threatLevel: 'TERMINAL',
     tags: ['clinical', 'academic', 'biographical containment'],
   },
+  {
+    slug: 'public-audio-advisory',
+    title: 'Advisory Notice PCA-0047-AUD',
+    subtitle: 'Public Disturbance: Unsolicited Audio Broadcast in a Shared Space',
+    classificationCode: 'PCA-0047-AUD',
+    department: 'Public Conduct Authority',
+    threatLevel: 'MODERATE',
+    tags: ['public conduct', 'audio hazard', 'headphone noncompliance'],
+  },
+  {
+    slug: 'non-functional-instructor',
+    title: 'Emergency Academic Field Card',
+    subtitle: 'Issued to Students Enrolled Under a Non-Functional Instructor',
+    classificationCode: 'EAF-CARD-NF1',
+    department: 'Dept. of Academic Endurance',
+    threatLevel: 'CRITICAL',
+    tags: ['academic survival', 'field card', 'instructor noncompliance'],
+  },
 ]
