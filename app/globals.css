@@ -2,10 +2,10 @@
 
 /* ── FALLBACK (before JS hydration) ─────────────────────────── */
 :root {
-  --c-bg:           #FDF6E3;
-  --c-bg-secondary: #F5E6C0;
-  --c-card:         #FEFAF0;
-  --c-fg:           #1a1000;
+  --c-bg:           #FDF8EE;
+  --c-bg-secondary: #F5EDD8;
+  --c-card:         #FEFBF3;
+  --c-fg:           #1c1408;
   --c-muted:        #5a4010;
   --c-subtle:       #9a7a40;
   --c-accent:       #C8941A;
