@@ -31,25 +31,36 @@ export default function CompendiumPage() {
           min-height: 100vh;
           position: relative;
           overflow: hidden;
-          background:
-            radial-gradient(ellipse at 50% 0%,   rgba(200,148,26,0.22) 0%, transparent 55%),
-            radial-gradient(ellipse at 10% 80%,  rgba(160,100,10,0.10) 0%, transparent 38%),
-            radial-gradient(ellipse at 90% 20%,  rgba(220,180,30,0.08) 0%, transparent 38%),
-            linear-gradient(158deg, #0e0900 0%, #1c1300 28%, #160f00 55%, #0a0700 100%);
+          background: var(--c-bg);
           color: var(--c-fg);
           font-family: 'DM Sans', sans-serif;
+          transition: background 0.3s ease;
         }
 
+        /* brushed grain */
         .cp-root::before {
           content: '';
           position: absolute;
           inset: 0;
           background-image: repeating-linear-gradient(
             0deg, transparent, transparent 3px,
-            rgba(200,148,26,0.009) 3px, rgba(200,148,26,0.009) 4px
+            rgba(255,255,255,0.008) 3px, rgba(255,255,255,0.008) 4px
           );
           pointer-events: none;
           z-index: 1;
+        }
+
+        /* radial accent glow — uses accent color */
+        .cp-root-glow {
+          position: absolute;
+          inset: 0;
+          pointer-events: none;
+          z-index: 1;
+          background:
+            radial-gradient(ellipse at 50% 0%,   rgba(var(--c-accent-rgb, 200,148,26),0.18) 0%, transparent 55%),
+            radial-gradient(ellipse at 10% 80%,  rgba(var(--c-accent-rgb, 200,148,26),0.08) 0%, transparent 38%),
+            radial-gradient(ellipse at 90% 20%,  rgba(var(--c-accent-rgb, 200,148,26),0.06) 0%, transparent 38%);
+          transition: background 0.3s ease;
         }
 
         .cp-glint {
@@ -67,11 +78,9 @@ export default function CompendiumPage() {
           background: linear-gradient(
             90deg,
             transparent 0%,
-            rgba(255,250,180,0.03) 25%,
-            rgba(255,252,200,0.09) 46%,
-            rgba(255,255,240,0.16) 50%,
-            rgba(255,252,200,0.09) 54%,
-            rgba(255,250,180,0.03) 75%,
+            rgba(255,255,255,0.025) 46%,
+            rgba(255,255,255,0.06) 50%,
+            rgba(255,255,255,0.025) 54%,
             transparent 100%
           );
           transform: skewX(-11deg);
@@ -85,7 +94,7 @@ export default function CompendiumPage() {
           background: linear-gradient(
             90deg,
             transparent 0%,
-            rgba(255,255,220,0.10) 50%,
+            rgba(255,255,255,0.06) 50%,
             transparent 100%
           );
           transform: skewX(-11deg);
@@ -115,18 +124,18 @@ export default function CompendiumPage() {
           font-size: 9px;
           letter-spacing: 3px;
           text-transform: uppercase;
-          color: #5A3E10;
+          color: var(--c-subtle);
           text-decoration: none;
           transition: color 0.2s;
         }
-        .cp-back:hover { color: #C8941A; }
+        .cp-back:hover { color: var(--c-accent); }
 
         .cp-nav-right {
           font-family: 'DM Mono', monospace;
           font-size: 9px;
           letter-spacing: 3px;
           text-transform: uppercase;
-          color: #3A2808;
+          color: var(--c-subtle);
         }
 
         .cp-hero {
@@ -140,7 +149,7 @@ export default function CompendiumPage() {
           font-size: 9px;
           letter-spacing: 6px;
           text-transform: uppercase;
-          color: #7A5A14;
+          color: var(--c-subtle);
           margin-bottom: 28px;
         }
 
@@ -153,19 +162,20 @@ export default function CompendiumPage() {
           margin: 0 0 6px;
           background: linear-gradient(
             158deg,
-            #3A2208  0%,
-            #7A5A14 12%,
-            #C8941A 26%,
-            #FFD700 40%,
-            #FFF8C0 50%,
-            #FFD700 60%,
-            #C8941A 74%,
-            #7A5A14 88%,
-            #3A2208 100%
+            var(--c-metal-deep)  0%,
+            var(--c-metal-dark) 12%,
+            var(--c-metal-mid)  26%,
+            var(--c-accent)     40%,
+            var(--c-metal-bright) 50%,
+            var(--c-accent)     60%,
+            var(--c-metal-mid)  74%,
+            var(--c-metal-dark) 88%,
+            var(--c-metal-deep) 100%
           );
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           background-clip: text;
+          transition: background 0.3s ease;
         }
 
         .cp-rule {
@@ -178,11 +188,12 @@ export default function CompendiumPage() {
         .cp-rule-line {
           height: 1px;
           width: 60px;
-          background: linear-gradient(90deg, transparent, rgba(200,148,26,0.5), transparent);
+          background: linear-gradient(90deg, transparent, var(--c-muted), transparent);
+          opacity: 0.5;
         }
         .cp-rule-diamond {
           font-size: 8px;
-          color: #C8941A;
+          color: var(--c-accent);
           animation: cp-diamond-pulse 3.5s ease-in-out infinite;
         }
 
@@ -191,7 +202,7 @@ export default function CompendiumPage() {
           font-size: clamp(16px, 2.2vw, 20px);
           font-style: italic;
           font-weight: 300;
-          color: #B07820;
+          color: var(--c-muted);
           line-height: 1.7;
           max-width: 480px;
           margin: 0 auto;
@@ -220,14 +231,14 @@ export default function CompendiumPage() {
         .cp-footer-rule-line {
           height: 1px;
           width: 40px;
-          background: rgba(200,148,26,0.2);
+          background: var(--c-border);
         }
-        .cp-footer-rule-dot { font-size: 7px; color: #4A3008; }
+        .cp-footer-rule-dot { font-size: 7px; color: var(--c-subtle); }
 
         .cp-footer-text {
           font-family: 'DM Mono', monospace;
           font-size: 9px;
-          color: #2A1808;
+          color: var(--c-subtle);
           letter-spacing: 1.5px;
           line-height: 2.4;
           text-transform: uppercase;
@@ -240,26 +251,24 @@ export default function CompendiumPage() {
           gap: 14px;
           margin-top: 20px;
         }
-        .cp-byline-line { height: 1px; width: 24px; background: #1c1000; }
+        .cp-byline-line { height: 1px; width: 24px; background: var(--c-border); }
         .cp-byline-text {
           font-family: 'DM Mono', monospace;
           font-size: 9px;
           letter-spacing: 5px;
           text-transform: uppercase;
-          color: #2A1808;
+          color: var(--c-subtle);
         }
       `}</style>
 
       <div className="cp-root">
+        <div className="cp-root-glow" aria-hidden />
         <div className="cp-glint" aria-hidden />
 
         <div className="cp-inner">
-
           <div className="cp-header">
-           <Link href="/" className="cp-back">← The Compendium</Link>
-            <div className="cp-nav-right">
-              Archive · {CASE_FILES.length} active files
-            </div>
+            <Link href="/" className="cp-back">← The Compendium</Link>
+            <div className="cp-nav-right">Archive · {CASE_FILES.length} active files</div>
           </div>
 
           <div className="cp-hero">
@@ -298,7 +307,6 @@ export default function CompendiumPage() {
               <div className="cp-byline-line" />
             </div>
           </div>
-
         </div>
       </div>
     </>

@@ -26,10 +26,10 @@ export default async function CaseFilePage({
           transition: background 0.25s ease;
         }
 
-        /* warm wood-panel nav */
+        /* ── top nav ── */
         .cf-nav {
-          background: linear-gradient(135deg, #1c1008 0%, #2a1a08 60%, #1c1008 100%);
-          border-bottom: 2px solid rgba(200,148,26,0.3);
+          background: var(--c-bg-secondary);
+          border-bottom: 1px solid var(--c-border);
           padding: 14px 28px;
           display: flex;
           align-items: center;
@@ -37,17 +37,23 @@ export default async function CaseFilePage({
           gap: 16px;
           flex-wrap: wrap;
           position: relative;
-          overflow: hidden;
         }
+
+        /* thin accent line riding top edge of nav */
         .cf-nav::before {
           content: '';
           position: absolute;
-          inset: 0;
-          background: repeating-linear-gradient(
-            90deg, transparent, transparent 60px,
-            rgba(200,148,26,0.04) 60px, rgba(200,148,26,0.04) 61px
+          top: 0; left: 0; right: 0;
+          height: 1px;
+          background: linear-gradient(
+            90deg,
+            transparent,
+            var(--c-muted) 30%,
+            var(--c-accent) 50%,
+            var(--c-muted) 70%,
+            transparent
           );
-          pointer-events: none;
+          opacity: 0.5;
         }
 
         .cf-nav-left {
@@ -61,29 +67,29 @@ export default async function CaseFilePage({
           font-size: 9px;
           letter-spacing: 3px;
           text-transform: uppercase;
-          color: #8a6a30;
+          color: var(--c-subtle);
           text-decoration: none;
           display: flex;
           align-items: center;
           gap: 6px;
           transition: color 0.15s;
         }
-        .cf-back:hover { color: #f5e8c0; }
+        .cf-back:hover { color: var(--c-accent); }
 
         .cf-nav-sep {
           width: 1px;
-          height: 18px;
-          background: rgba(200,148,26,0.2);
+          height: 16px;
+          background: var(--c-border);
         }
 
-        .cf-nav-archive {
+        .cf-nav-title {
           font-family: 'Cormorant Garamond', serif;
           font-size: 16px;
           font-weight: 400;
-          color: #c8a860;
-          letter-spacing: 1px;
+          font-style: italic;
+          color: var(--c-fg);
+          letter-spacing: 0.5px;
         }
-        .cf-nav-archive em { font-style: italic; color: #e8c870; }
 
         .cf-nav-right {
           display: flex;
@@ -92,56 +98,64 @@ export default async function CaseFilePage({
           flex-wrap: wrap;
         }
 
-        .cf-byline {
-          display: flex;
-          align-items: center;
-          gap: 6px;
-        }
-        .cf-byline-sep { width: 10px; height: 1px; background: rgba(200,148,26,0.2); }
-        .cf-byline-by  { font-family: 'DM Mono', monospace; font-size: 8px; color: #4a3010; letter-spacing: 2px; }
-        .cf-byline-name {
-          font-family: 'DM Mono', monospace;
-          font-size: 9px; font-weight: 500; color: #6a4a20;
-          letter-spacing: 3px; transition: color 0.3s;
-        }
-        .cf-byline-name:hover { color: #f5e8c0; }
-
-        .cf-code {
+        .cf-nav-code {
           font-family: 'DM Mono', monospace;
           font-size: 9px;
-          color: #3a2810;
+          color: var(--c-subtle);
           letter-spacing: 2px;
         }
 
-        /* thin gold accent bar under nav */
+        .cf-nav-by {
+          font-family: 'DM Mono', monospace;
+          font-size: 9px;
+          letter-spacing: 3px;
+          color: var(--c-subtle);
+          text-transform: uppercase;
+          transition: color 0.2s;
+        }
+        .cf-nav-by:hover { color: var(--c-fg); }
+
+        /* ── thin gold rule under nav ── */
         .cf-accent-bar {
-          height: 3px;
-          background: linear-gradient(90deg, transparent, rgba(200,148,26,0.5), rgba(200,148,26,0.8), rgba(200,148,26,0.5), transparent);
+          height: 2px;
+          background: linear-gradient(
+            90deg,
+            transparent,
+            var(--c-muted) 20%,
+            var(--c-accent) 50%,
+            var(--c-muted) 80%,
+            transparent
+          );
+          opacity: 0.6;
         }
 
-        /* warm breadcrumb strip */
+        /* ── breadcrumb ── */
         .cf-breadcrumb {
-          background: rgba(245,232,192,0.5);
-          border-bottom: 1px solid rgba(200,148,26,0.12);
           padding: 8px 28px;
           display: flex;
           align-items: center;
           gap: 8px;
-          backdrop-filter: blur(4px);
+          border-bottom: 1px solid var(--c-border);
+          background: var(--c-bg);
         }
-        .cf-crumb-leaf { font-size: 12px; opacity: 0.6; }
+
         .cf-crumb-text {
           font-family: 'DM Mono', monospace;
           font-size: 9px;
           letter-spacing: 2px;
           color: var(--c-subtle);
           text-transform: uppercase;
+          text-decoration: none;
+          transition: color 0.15s;
         }
+        a.cf-crumb-text:hover { color: var(--c-muted); }
+
         .cf-crumb-sep {
           font-family: 'DM Mono', monospace;
           font-size: 9px;
-          color: rgba(160,96,16,0.3);
+          color: var(--c-border);
         }
+
         .cf-crumb-active {
           font-family: 'DM Mono', monospace;
           font-size: 9px;
@@ -151,6 +165,7 @@ export default async function CaseFilePage({
           font-weight: 500;
         }
 
+        /* ── body ── */
         .cf-body {
           max-width: 880px;
           margin: 0 auto;
@@ -160,32 +175,24 @@ export default async function CaseFilePage({
 
       <main className="cf-shell">
 
-        {/* Wood-panel nav */}
         <nav className="cf-nav">
           <div className="cf-nav-left">
             <Link href="/compendium" className="cf-back">
-              🍃 ← Archive
+              ← Archive
             </Link>
             <div className="cf-nav-sep" />
-            <span className="cf-nav-archive">The <em>Compendium</em></span>
+            <span className="cf-nav-title">The Compendium</span>
           </div>
           <div className="cf-nav-right">
-            <div className="cf-byline">
-              <div className="cf-byline-sep" />
-              <span className="cf-byline-by">by</span>
-              <span className="cf-byline-name">ABYSSPROTOCOL</span>
-            </div>
-            <div className="cf-code">{meta.classificationCode}</div>
+            <span className="cf-nav-by">ABYSSPROTOCOL</span>
+            <span className="cf-nav-code">{meta.classificationCode}</span>
           </div>
         </nav>
 
-        {/* Gold accent line */}
         <div className="cf-accent-bar" />
 
-        {/* Breadcrumb */}
         <div className="cf-breadcrumb">
-          <span className="cf-crumb-leaf">🌿</span>
-          <span className="cf-crumb-text">Archive</span>
+          <Link href="/compendium" className="cf-crumb-text">Archive</Link>
           <span className="cf-crumb-sep">›</span>
           <span className="cf-crumb-text">{meta.department}</span>
           <span className="cf-crumb-sep">›</span>

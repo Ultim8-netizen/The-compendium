@@ -20,6 +20,7 @@ html[data-theme="gold"] {
   --c-metal-mid:    #FFD700;
   --c-metal-dark:   #8B6914;
   --c-metal-deep:   #4A3008;
+  --c-accent-rgb:   200,148,26;
 }
 
 /* ══════════════════════════════════════════════════════════════
@@ -41,6 +42,7 @@ html[data-theme="rose"] {
   --c-metal-mid:    #D47888;
   --c-metal-dark:   #7A3848;
   --c-metal-deep:   #3A1020;
+  --c-accent-rgb:   200,100,130;
 }
 
 /* ══════════════════════════════════════════════════════════════
@@ -62,6 +64,7 @@ html[data-theme="cobalt"] {
   --c-metal-mid:    #5090C0;
   --c-metal-dark:   #1C4870;
   --c-metal-deep:   #081828;
+  --c-accent-rgb:   60,120,180;
 }
 
 /* ══════════════════════════════════════════════════════════════
@@ -83,6 +86,7 @@ html[data-theme="obsidian"] {
   --c-metal-mid:    #9068B8;
   --c-metal-dark:   #402858;
   --c-metal-deep:   #180c28;
+  --c-accent-rgb:   120,90,180;
 }
 
 /* ══════════════════════════════════════════════════════════════
@@ -91,7 +95,7 @@ html[data-theme="obsidian"] {
 .metal-text {
   background: linear-gradient(
     135deg,
-    var(--c-metal-deep)  0%,
+    var(--c-metal-deep)   0%,
     var(--c-metal-dark)  15%,
     var(--c-metal-mid)   35%,
     var(--c-metal-bright) 50%,

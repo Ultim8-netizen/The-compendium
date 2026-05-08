@@ -1,4 +1,5 @@
 import { ImageResponse } from 'next/og'
+import { CASE_FILES } from '@/case-files/_registry'
 
 export const runtime = 'edge'
 export const alt = 'The Compendium — A classified archive of deeply unnecessary human behavioral intelligence.'
@@ -12,7 +13,7 @@ export default function OGImage() {
         style={{
           width: 1200,
           height: 630,
-          backgroundColor: '#0a0a0a',
+          background: 'linear-gradient(158deg, #0e0900 0%, #1c1300 28%, #160f00 55%, #0a0700 100%)',
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'space-between',
@@ -22,55 +23,123 @@ export default function OGImage() {
           position: 'relative',
         }}
       >
-        {/* scan lines */}
-        <div style={{ position: 'absolute', inset: 0, backgroundImage: 'repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(255,255,255,0.012) 39px, rgba(255,255,255,0.012) 40px)', display: 'flex' }} />
-        <div style={{ position: 'absolute', inset: 0, backgroundImage: 'repeating-linear-gradient(180deg, transparent, transparent 59px, rgba(255,255,255,0.015) 59px, rgba(255,255,255,0.015) 60px)', display: 'flex' }} />
+        {/* brushed grain lines */}
+        <div style={{
+          position: 'absolute', inset: 0,
+          backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(200,148,26,0.012) 3px, rgba(200,148,26,0.012) 4px)',
+          display: 'flex',
+        }} />
+
+        {/* radial gold glow */}
+        <div style={{
+          position: 'absolute', inset: 0,
+          background: 'radial-gradient(ellipse at 50% 0%, rgba(200,148,26,0.28) 0%, transparent 60%)',
+          display: 'flex',
+        }} />
+
+        {/* left gold accent bar */}
+        <div style={{
+          position: 'absolute', left: 0, top: 0, bottom: 0, width: 3,
+          background: 'linear-gradient(180deg, transparent, #C8941A 20%, #FFD700 50%, #C8941A 80%, transparent)',
+          display: 'flex',
+        }} />
+
+        {/* top right classification stamps */}
+        <div style={{
+          position: 'absolute', top: 40, right: 64,
+          display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 6,
+        }}>
+          <div style={{ fontSize: 10, color: '#3A2808', letterSpacing: 3, display: 'flex' }}>
+            ARCHIVE REF: CMP-∞-ACTIVE
+          </div>
+          <div style={{ fontSize: 10, color: '#2A1808', letterSpacing: 3, display: 'flex' }}>
+            DISTRIBUTION: UNRESTRICTED (REGRETTABLY)
+          </div>
+        </div>
 
         {/* ghost watermark */}
-        <div style={{ position: 'absolute', bottom: -20, right: -30, fontSize: 180, fontWeight: 900, color: 'rgba(255,255,255,0.018)', letterSpacing: -4, lineHeight: 1, display: 'flex' }}>
+        <div style={{
+          position: 'absolute', bottom: -30, right: -20,
+          fontSize: 160, fontWeight: 900,
+          color: 'rgba(200,148,26,0.04)',
+          letterSpacing: -4, lineHeight: 1, display: 'flex',
+        }}>
           CLASSIFIED
         </div>
 
-        {/* left accent bar */}
-        <div style={{ position: 'absolute', left: 0, top: 0, bottom: 0, width: 4, backgroundColor: '#facc15', display: 'flex' }} />
-
-        {/* top stamps */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-          <div style={{ display: 'flex', gap: 10 }}>
-            <div style={{ border: '2px solid #dc2626', color: '#dc2626', fontSize: 11, fontWeight: 700, letterSpacing: 4, padding: '5px 14px', display: 'flex' }}>TOP SECRET</div>
-            <div style={{ border: '2px solid #dc2626', color: '#dc2626', fontSize: 11, fontWeight: 700, letterSpacing: 4, padding: '5px 14px', display: 'flex' }}>EYES ONLY</div>
+        {/* top row */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 16, position: 'relative', zIndex: 1 }}>
+          {/* metallic diamond mark */}
+          <div style={{
+            width: 36, height: 36,
+            border: '1px solid rgba(200,148,26,0.5)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            background: 'rgba(200,148,26,0.08)',
+          }}>
+            <div style={{ fontSize: 16, color: '#C8941A', display: 'flex' }}>◆</div>
           </div>
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 4 }}>
-            <div style={{ fontSize: 10, color: '#3a3a3a', letterSpacing: 3, display: 'flex' }}>ARCHIVE REF: CMP-∞-ACTIVE</div>
-            <div style={{ fontSize: 10, color: '#3a3a3a', letterSpacing: 3, display: 'flex' }}>DISTRIBUTION: UNRESTRICTED (REGRETTABLY)</div>
+          <div style={{
+            fontFamily: '"Courier New", monospace',
+            fontSize: 10, letterSpacing: 5, textTransform: 'uppercase',
+            color: '#7A5A14', display: 'flex',
+          }}>
+            Classified Repository · Restricted Access
           </div>
         </div>
 
-        {/* main body */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
-          <div style={{ fontSize: 11, color: '#525252', letterSpacing: 6, textTransform: 'uppercase', marginBottom: 14, display: 'flex' }}>
-            Classified Repository · Active Archive
-          </div>
-          <div style={{ fontSize: 104, fontWeight: 900, color: '#ffffff', letterSpacing: -3, lineHeight: 1, marginBottom: 28, display: 'flex' }}>
+        {/* main title block */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 0, position: 'relative', zIndex: 1 }}>
+
+          {/* horizontal rule */}
+          <div style={{
+            height: 1,
+            background: 'linear-gradient(90deg, transparent, rgba(200,148,26,0.6), rgba(255,215,0,0.8), rgba(200,148,26,0.6), transparent)',
+            marginBottom: 28,
+            display: 'flex',
+          }} />
+
+          <div style={{
+            fontSize: 108, fontWeight: 900, lineHeight: 0.88,
+            letterSpacing: -4, marginBottom: 24,
+            background: 'linear-gradient(158deg, #3A2208 0%, #7A5A14 12%, #C8941A 26%, #FFD700 40%, #FFF8C0 50%, #FFD700 60%, #C8941A 74%, #7A5A14 88%, #3A2208 100%)',
+            WebkitBackgroundClip: 'text',
+            color: 'transparent',
+            display: 'flex',
+          }}>
             THE COMPENDIUM
           </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 44 }}>
-            <div style={{ fontSize: 14, color: '#525252', letterSpacing: 1.5, display: 'flex' }}>A classified archive of deeply unnecessary</div>
-            <div style={{ backgroundColor: '#1c1c1c', width: 160, height: 20, display: 'flex' }} />
-            <div style={{ fontSize: 14, color: '#525252', letterSpacing: 1.5, display: 'flex' }}>intelligence.</div>
+
+          <div style={{
+            fontSize: 15, fontStyle: 'italic', fontWeight: 300,
+            color: '#B07820', letterSpacing: 1, marginBottom: 36,
+            display: 'flex',
+          }}>
+            A classified archive of deeply unnecessary human behavioral intelligence.
           </div>
+
+          {/* stat row */}
           <div style={{ display: 'flex', gap: 0, alignItems: 'stretch' }}>
             {[
-              { label: 'Active Files', value: '03' },
+              { label: 'Active Files',      value: String(CASE_FILES.length).padStart(2,'0') },
               { label: 'Clearance Required', value: 'YES' },
-              { label: 'Intake Duration', value: '90s' },
-              { label: 'Profile Retention', value: '24H' },
+              { label: 'Intake Duration',    value: '90s' },
+              { label: 'Profile Retention',  value: '24H' },
             ].map((stat, i) => (
               <div key={stat.label} style={{ display: 'flex', alignItems: 'stretch' }}>
-                {i > 0 && <div style={{ width: 1, backgroundColor: '#1f1f1f', display: 'flex', marginRight: 32 }} />}
+                {i > 0 && (
+                  <div style={{
+                    width: 1,
+                    background: 'rgba(200,148,26,0.2)',
+                    display: 'flex', marginRight: 32,
+                  }} />
+                )}
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 6, marginRight: 32 }}>
-                  <div style={{ fontSize: 9, color: '#404040', letterSpacing: 4, textTransform: 'uppercase', display: 'flex' }}>{stat.label}</div>
-                  <div style={{ fontSize: 32, fontWeight: 900, color: '#facc15', lineHeight: 1, display: 'flex' }}>{stat.value}</div>
+                  <div style={{ fontSize: 9, color: '#4A3008', letterSpacing: 4, textTransform: 'uppercase', display: 'flex' }}>
+                    {stat.label}
+                  </div>
+                  <div style={{ fontSize: 34, fontWeight: 900, color: '#FFD700', lineHeight: 1, display: 'flex' }}>
+                    {stat.value}
+                  </div>
                 </div>
               </div>
             ))}
@@ -78,24 +147,29 @@ export default function OGImage() {
         </div>
 
         {/* bottom bar */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', borderTop: '1px solid #1c1c1c', paddingTop: 24 }}>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
-            <div style={{ fontSize: 10, color: '#3a3a3a', letterSpacing: 2, display: 'flex' }}>
+        <div style={{
+          display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end',
+          borderTop: '1px solid rgba(200,148,26,0.2)', paddingTop: 20,
+          position: 'relative', zIndex: 1,
+        }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
+            <div style={{ fontSize: 10, color: '#3A2808', letterSpacing: 2, display: 'flex' }}>
               VISITOR INTAKE MANDATORY · ALL PROFILES EXPIRE IN 24 HOURS
             </div>
-            <div style={{ fontSize: 10, color: '#262626', letterSpacing: 2, display: 'flex' }}>
-              WE RETAIN NOTHING · THIS WAS ALWAYS GOING TO BE TRUE
-            </div>
-            {/* byline */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 10 }}>
-              <div style={{ width: 18, height: 1, backgroundColor: '#2a2a2a', display: 'flex' }} />
-              <div style={{ fontSize: 10, color: '#2e2e2e', letterSpacing: 4, display: 'flex' }}>by</div>
-              <div style={{ fontSize: 12, fontWeight: 900, color: '#404040', letterSpacing: 5, display: 'flex' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginTop: 6 }}>
+              <div style={{ width: 20, height: 1, background: '#2A1808', display: 'flex' }} />
+              <div style={{ fontSize: 10, color: '#2A1808', letterSpacing: 4, display: 'flex' }}>by</div>
+              <div style={{ fontSize: 12, fontWeight: 900, color: '#5A3E10', letterSpacing: 5, display: 'flex' }}>
                 ABYSSPROTOCOL
               </div>
             </div>
           </div>
-          <div style={{ backgroundColor: '#facc15', color: '#000000', fontSize: 11, fontWeight: 900, letterSpacing: 4, padding: '10px 22px', display: 'flex' }}>
+          <div style={{
+            background: 'linear-gradient(135deg, #1c1400, #2e2000)',
+            border: '1px solid rgba(200,148,26,0.5)',
+            color: '#FFD700', fontSize: 11, fontWeight: 900,
+            letterSpacing: 4, padding: '12px 24px', display: 'flex',
+          }}>
             ENTER IF CLEARED
           </div>
         </div>
