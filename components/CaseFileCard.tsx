@@ -1,139 +1,163 @@
-// components/CaseFileCard.tsx
 import Link from 'next/link'
 import type { CaseFileMeta } from '@/case-files/_registry'
 
-const THREAT_STYLES: Record<string, { bar: string; text: string; border: string }> = {
-  LOW:      { bar: 'bg-green-600',  text: 'text-green-500',  border: 'border-green-600' },
-  MODERATE: { bar: 'bg-yellow-500', text: 'text-yellow-500', border: 'border-yellow-500' },
-  CRITICAL: { bar: 'bg-orange-500', text: 'text-orange-500', border: 'border-orange-500' },
-  TERMINAL: { bar: 'bg-red-600',    text: 'text-red-500',    border: 'border-red-600' },
+const THREAT: Record<string, { color: string }> = {
+  LOW:      { color: '#16a34a' },
+  MODERATE: { color: '#d97706' },
+  CRITICAL: { color: '#ea580c' },
+  TERMINAL: { color: '#dc2626' },
 }
 
 const THREAT_FILL: Record<string, string> = {
-  LOW:      'w-1/4',
-  MODERATE: 'w-2/4',
-  CRITICAL: 'w-3/4',
-  TERMINAL: 'w-full',
+  LOW: '25%', MODERATE: '50%', CRITICAL: '75%', TERMINAL: '100%',
 }
 
-interface CaseFileCardProps {
-  file: CaseFileMeta
-  index?: number
-}
+interface Props { file: CaseFileMeta; index?: number }
 
-export default function CaseFileCard({ file, index = 0 }: CaseFileCardProps) {
-  const style = THREAT_STYLES[file.threatLevel] ?? THREAT_STYLES.MODERATE
-  const fill  = THREAT_FILL[file.threatLevel]  ?? 'w-2/4'
+export default function CaseFileCard({ file, index = 0 }: Props) {
+  const t    = THREAT[file.threatLevel]      ?? THREAT.MODERATE
+  const fill = THREAT_FILL[file.threatLevel] ?? '50%'
 
   return (
-    <Link href={`/compendium/${file.slug}`} className="group block focus:outline-none">
-      <div
-        className="
-          relative border border-neutral-800 bg-neutral-950
-          hover:border-neutral-600 transition-all duration-300
-          hover:bg-neutral-900 cursor-pointer overflow-hidden
-          focus-within:border-neutral-500
-        "
-      >
-        {/* index watermark */}
-        <div
-          aria-hidden
-          className="
-            absolute bottom-3 right-4 font-mono text-6xl font-black
-            text-neutral-900 select-none pointer-events-none leading-none
-            group-hover:text-neutral-800 transition-colors duration-300
-          "
-        >
+    <>
+      <style>{`
+        .cfc-wrap {
+          display: block; text-decoration: none;
+          position: relative;
+          border: 1px solid var(--c-border);
+          background: var(--c-card);
+          overflow: hidden;
+          transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+          cursor: pointer;
+        }
+        .cfc-wrap:hover {
+          border-color: var(--c-muted);
+          box-shadow: 0 4px 24px var(--c-shadow);
+        }
+        .cfc-watermark {
+          position: absolute; bottom: 8px; right: 12px;
+          font-family: 'DM Mono', monospace;
+          font-size: 56px; font-weight: 700;
+          color: var(--c-border);
+          pointer-events: none; user-select: none; line-height: 1;
+          transition: color 0.2s;
+        }
+        .cfc-wrap:hover .cfc-watermark { color: var(--c-bg-secondary); }
+        .cfc-inner { padding: 20px; position: relative; z-index: 1; }
+        .cfc-top {
+          display: flex; align-items: flex-start;
+          justify-content: space-between; gap: 8px; margin-bottom: 16px;
+        }
+        .cfc-badge {
+          font-family: 'DM Mono', monospace;
+          font-size: 9px; font-weight: 700;
+          letter-spacing: 2px; text-transform: uppercase;
+          border: 1px solid; padding: 2px 8px; flex-shrink: 0;
+        }
+        .cfc-code {
+          font-family: 'DM Mono', monospace;
+          font-size: 9px; letter-spacing: 2px;
+          color: var(--c-subtle); text-align: right;
+        }
+        .cfc-title {
+          font-family: 'DM Sans', sans-serif;
+          font-size: 13px; font-weight: 700;
+          color: var(--c-fg);
+          line-height: 1.3; margin-bottom: 4px;
+          text-transform: uppercase; letter-spacing: 0.5px;
+          transition: color 0.2s;
+        }
+        .cfc-wrap:hover .cfc-title { color: var(--c-accent); }
+        .cfc-subtitle {
+          font-family: 'DM Sans', sans-serif;
+          font-size: 11px; color: var(--c-muted);
+          margin-bottom: 14px; line-height: 1.5; font-weight: 300;
+        }
+        .cfc-dept {
+          font-family: 'DM Mono', monospace;
+          font-size: 9px; text-transform: uppercase;
+          letter-spacing: 2px; color: var(--c-subtle); margin-bottom: 12px;
+        }
+        .cfc-meter-label {
+          display: flex; align-items: center; justify-content: space-between;
+          margin-bottom: 4px;
+        }
+        .cfc-meter-txt {
+          font-family: 'DM Mono', monospace;
+          font-size: 8px; letter-spacing: 2px;
+          text-transform: uppercase; color: var(--c-subtle);
+        }
+        .cfc-track {
+          height: 1px; background: var(--c-border);
+          position: relative; margin-bottom: 14px;
+        }
+        .cfc-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+        .cfc-tag {
+          font-family: 'DM Mono', monospace;
+          font-size: 9px; letter-spacing: 1px;
+          color: var(--c-subtle);
+          border: 1px solid var(--c-border);
+          padding: 2px 7px;
+          transition: border-color 0.2s;
+        }
+        .cfc-wrap:hover .cfc-tag { border-color: var(--c-muted); }
+        .cfc-action {
+          border-top: 1px solid var(--c-border);
+          padding: 10px 20px;
+          display: flex; align-items: center; justify-content: space-between;
+          opacity: 0; transition: opacity 0.2s;
+          background: var(--c-bg-secondary);
+        }
+        .cfc-wrap:hover .cfc-action { opacity: 1; }
+        .cfc-action-txt {
+          font-family: 'DM Mono', monospace;
+          font-size: 9px; letter-spacing: 3px;
+          text-transform: uppercase; color: var(--c-muted);
+        }
+      `}</style>
+
+      <Link href={`/compendium/${file.slug}`} className="cfc-wrap shimmer-card">
+        <div className="cfc-watermark" aria-hidden>
           {String(index + 1).padStart(2, '0')}
         </div>
 
-        {/* top bar — threat fill */}
-        <div className="h-px w-full bg-neutral-800">
-          <div className={`h-px ${fill} ${style.bar} transition-all duration-500`} />
+        {/* threat bar */}
+        <div style={{ height: '2px', width: '100%', background: 'var(--c-border)' }}>
+          <div style={{ height: '2px', width: fill, background: t.color, transition: 'width 0.4s' }} />
         </div>
 
-        <div className="p-6 relative z-10">
-          {/* header row */}
-          <div className="flex items-start justify-between mb-5 gap-3">
-            <div
-              className={`
-                text-xs font-bold tracking-widest border px-2 py-0.5 font-mono
-                shrink-0 ${style.text} ${style.border}
-              `}
-            >
+        <div className="cfc-inner">
+          <div className="cfc-top">
+            <div className="cfc-badge" style={{ color: t.color, borderColor: t.color }}>
               {file.threatLevel}
             </div>
-            <div className="text-xs text-neutral-600 tracking-widest font-mono text-right">
-              {file.classificationCode}
-            </div>
+            <div className="cfc-code">{file.classificationCode}</div>
           </div>
 
-          {/* title */}
-          <h2
-            className="
-              text-base font-black text-white leading-tight mb-1
-              group-hover:text-yellow-400 transition-colors duration-200
-              tracking-wide uppercase
-            "
-          >
-            {file.title}
-          </h2>
-          <p className="text-xs text-neutral-500 mb-4 leading-relaxed">
-            {file.subtitle}
-          </p>
+          <div className="cfc-title">{file.title}</div>
+          <div className="cfc-subtitle">{file.subtitle}</div>
+          <div className="cfc-dept">{file.department}</div>
 
-          {/* department */}
-          <div className="text-xs text-neutral-700 uppercase tracking-wider mb-4 font-mono">
-            {file.department}
+          <div className="cfc-meter-label">
+            <span className="cfc-meter-txt">Threat Meter</span>
+            <span className="cfc-meter-txt" style={{ color: t.color }}>{file.threatLevel}</span>
+          </div>
+          <div className="cfc-track">
+            <div style={{ position: 'absolute', inset: 0, width: fill, background: t.color }} />
           </div>
 
-          {/* threat meter */}
-          <div className="mb-4">
-            <div className="flex items-center justify-between mb-1">
-              <span className="text-xs text-neutral-700 tracking-widest uppercase font-mono">
-                Threat Meter
-              </span>
-              <span className={`text-xs font-mono font-bold ${style.text}`}>
-                {file.threatLevel}
-              </span>
-            </div>
-            <div className="h-px bg-neutral-800 relative">
-              <div className={`absolute inset-y-0 left-0 ${fill} ${style.bar}`} />
-            </div>
-          </div>
-
-          {/* tags */}
-          <div className="flex flex-wrap gap-2">
+          <div className="cfc-tags">
             {file.tags.map(tag => (
-              <span
-                key={tag}
-                className="
-                  text-xs text-neutral-600 border border-neutral-800 px-2 py-0.5
-                  font-mono group-hover:border-neutral-700 transition-colors duration-200
-                "
-              >
-                {tag}
-              </span>
+              <span key={tag} className="cfc-tag">{tag}</span>
             ))}
           </div>
         </div>
 
-        {/* bottom action strip — visible on hover */}
-        <div
-          className="
-            border-t border-neutral-800 px-6 py-3
-            flex items-center justify-between
-            opacity-0 group-hover:opacity-100
-            transition-opacity duration-200
-            bg-neutral-900
-          "
-        >
-          <span className="text-xs text-neutral-500 tracking-widest uppercase font-mono">
-            Access file
-          </span>
-          <span className="text-yellow-400 text-xs font-mono">→</span>
+        <div className="cfc-action">
+          <span className="cfc-action-txt">Access file</span>
+          <span style={{ color: 'var(--c-accent)', fontFamily: "'DM Mono', monospace", fontSize: '12px' }}>→</span>
         </div>
-      </div>
-    </Link>
+      </Link>
+    </>
   )
 }

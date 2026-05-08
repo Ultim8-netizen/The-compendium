@@ -1,158 +1,180 @@
-// components/VisitorBadge.tsx
-
 interface VisitorProfile {
-  id: string
-  codename: string
-  threat_level: string
-  assigned_section: string
-  profile_summary: string
-  expires_at: string
+  id: string; codename: string; threat_level: string;
+  assigned_section: string; profile_summary: string; expires_at: string;
 }
 
-interface VisitorBadgeProps {
-  profile: VisitorProfile
-  /** true = newly issued profile reveal; false = returning visitor resume screen */
-  isNew: boolean
-  onEnter: () => void
+interface Props {
+  profile:   VisitorProfile
+  isNew:     boolean
+  onEnter:   () => void
   onReissue?: () => void
 }
 
-/**
- * Shared between the 'profile' phase (new issuance) and the 'resume' phase
- * (returning visitor). isNew controls whether the full behavioral assessment
- * and re-issue option are shown.
- */
-export default function VisitorBadge({
-  profile,
-  isNew,
-  onEnter,
-  onReissue,
-}: VisitorBadgeProps) {
-  const expiresAt   = new Date(profile.expires_at)
-  const expiresTime = expiresAt.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-  const issuedLabel = isNew
+export default function VisitorBadge({ profile, isNew, onEnter, onReissue }: Props) {
+  const expiresTime      = new Date(profile.expires_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+  const issuedLabel      = isNew
     ? `Visitor Clearance Profile — Issued ${new Date().toUTCString()}`
     : `Active profile detected. Expires ${expiresTime} today.`
-
   const summaryParagraphs = profile.profile_summary.split('\n\n').filter(Boolean)
 
   return (
-    <div className="max-w-xl w-full pt-10 space-y-8">
+    <>
+      <style>{`
+        .vb-issued {
+          font-family: 'DM Mono', monospace;
+          font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+          color: var(--c-subtle); margin-bottom: 8px;
+        }
+        .vb-sublabel {
+          font-family: 'DM Mono', monospace;
+          font-size: 9px; letter-spacing: 3px; text-transform: uppercase;
+          color: var(--c-subtle); margin-bottom: 10px;
+        }
+        .vb-codename {
+          font-family: 'Cormorant Garamond', serif;
+          font-weight: 600; color: var(--c-accent);
+          letter-spacing: 2px; line-height: 1.1; margin-bottom: 4px;
+        }
+        .vb-expire {
+          font-family: 'DM Mono', monospace;
+          font-size: 10px; color: var(--c-subtle);
+        }
+        .vb-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .vb-cell {
+          background: var(--c-card); border: 1px solid var(--c-border);
+          padding: 14px 16px;
+        }
+        .vb-cell-label {
+          font-family: 'DM Mono', monospace;
+          font-size: 9px; letter-spacing: 3px; text-transform: uppercase;
+          color: var(--c-subtle); margin-bottom: 8px;
+        }
+        .vb-cell-val {
+          font-family: 'DM Sans', sans-serif;
+          font-size: 13px; line-height: 1.5; font-weight: 300;
+        }
+        .vb-assessment {
+          border: 1px solid var(--c-border);
+          background: var(--c-card); padding: 20px;
+        }
+        .vb-assessment-label {
+          font-family: 'DM Mono', monospace;
+          font-size: 9px; letter-spacing: 3px; text-transform: uppercase;
+          color: var(--c-subtle); margin-bottom: 14px;
+        }
+        .vb-clearance {
+          border: 1px solid var(--c-border);
+          background: var(--c-card);
+          padding: 14px 16px; display: flex; align-items: center; gap: 14px;
+        }
+        .vb-clearance-icon {
+          width: 32px; height: 32px; border: 1px solid var(--c-accent);
+          display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+        }
+        .vb-clearance-dot { width: 14px; height: 14px; background: var(--c-accent); opacity: 0.5; }
+        .vb-clearance-label {
+          font-family: 'DM Mono', monospace;
+          font-size: 9px; letter-spacing: 2px; text-transform: uppercase;
+          color: var(--c-subtle); margin-bottom: 4px;
+        }
+        .vb-clearance-val {
+          font-family: 'DM Mono', monospace;
+          font-size: 12px; color: var(--c-accent); font-weight: 500; letter-spacing: 1px;
+        }
+        .vb-btn-primary {
+          width: 100%; padding: 16px;
+          background: var(--c-fg); color: var(--c-bg);
+          font-family: 'DM Mono', monospace;
+          font-size: 11px; font-weight: 500; letter-spacing: 4px; text-transform: uppercase;
+          border: none; cursor: pointer; transition: all 0.2s;
+        }
+        .vb-btn-primary:hover { background: var(--c-accent); color: var(--c-accent-fg); }
+        .vb-btn-secondary {
+          width: 100%; padding: 12px;
+          background: transparent;
+          border: 1px solid var(--c-border); color: var(--c-subtle);
+          font-family: 'DM Mono', monospace;
+          font-size: 9px; letter-spacing: 3px; text-transform: uppercase;
+          cursor: pointer; transition: all 0.2s;
+        }
+        .vb-btn-secondary:hover { border-color: var(--c-muted); color: var(--c-muted); }
+        .vb-fine {
+          font-family: 'DM Mono', monospace;
+          font-size: 9px; color: var(--c-subtle); text-align: center; line-height: 1.8;
+          letter-spacing: 0.5px;
+        }
+      `}</style>
 
-      {/* issued label + codename */}
-      <div>
-        <div className="text-xs tracking-widest text-neutral-500 uppercase mb-2 font-mono">
-          {issuedLabel}
-        </div>
-        <div className="text-xs text-neutral-600 tracking-widest uppercase mb-3 font-mono">
-          {isNew ? 'Assigned codename' : 'Your codename'}
-        </div>
-        <div
-          className={`
-            font-black text-yellow-400 tracking-wide leading-tight mb-1
-            ${isNew ? 'text-4xl' : 'text-3xl'}
-          `}
-        >
-          {profile.codename}
-        </div>
-        <div className="text-xs text-neutral-600 font-mono">
-          {isNew
-            ? 'Profile self-destructs in 24 hours from this moment.'
-            : 'This profile will be destroyed at the time listed above. Not a metaphor.'}
-        </div>
-      </div>
+      <div className="max-w-xl w-full pt-10" style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
 
-      {/* threat + section grid */}
-      <div className="grid grid-cols-2 gap-3">
-        <div className="bg-neutral-900 border border-neutral-800 p-4">
-          <div className="text-xs text-neutral-500 tracking-widest uppercase mb-2 font-mono">
-            Threat level
+        <div>
+          <div className="vb-issued">{issuedLabel}</div>
+          <div className="vb-sublabel">{isNew ? 'Assigned codename' : 'Your codename'}</div>
+          <div className="vb-codename" style={{ fontSize: isNew ? '36px' : '28px' }}>
+            {profile.codename}
           </div>
-          <div className="text-sm text-red-400 leading-snug font-mono">
-            {profile.threat_level}
-          </div>
-        </div>
-        <div className="bg-neutral-900 border border-neutral-800 p-4">
-          <div className="text-xs text-neutral-500 tracking-widest uppercase mb-2 font-mono">
-            Assigned section
-          </div>
-          <div className="text-sm text-neutral-400 leading-snug font-mono">
-            {profile.assigned_section}
+          <div className="vb-expire">
+            {isNew
+              ? 'Profile self-destructs in 24 hours from this moment.'
+              : 'This profile will be destroyed at the time listed above.'}
           </div>
         </div>
-      </div>
 
-      {/* behavioral assessment — only on new issuance */}
-      {isNew && summaryParagraphs.length > 0 && (
-        <div className="border border-neutral-800 p-6 space-y-4">
-          <div className="text-xs text-neutral-500 tracking-widest uppercase font-mono">
-            Behavioral assessment
+        <div className="vb-grid">
+          <div className="vb-cell">
+            <div className="vb-cell-label">Threat level</div>
+            <div className="vb-cell-val" style={{ color: '#dc2626' }}>{profile.threat_level}</div>
           </div>
-          {summaryParagraphs.map((para, i) => (
-            <p
-              key={i}
-              className={`text-sm leading-relaxed font-mono ${
-                i === 0
-                  ? 'text-neutral-400'
-                  : i === summaryParagraphs.length - 1
-                  ? 'text-yellow-600 font-bold tracking-wide text-xs'
-                  : 'text-neutral-400'
-              }`}
-            >
-              {para}
-            </p>
-          ))}
-        </div>
-      )}
-
-      {/* classification stamp row — decorative on resume */}
-      {!isNew && (
-        <div className="border border-neutral-800 p-4 flex items-center gap-4">
-          <div className="w-8 h-8 border border-yellow-600 flex items-center justify-center shrink-0">
-            <div className="w-4 h-4 bg-yellow-600 opacity-60" />
-          </div>
-          <div>
-            <div className="text-xs text-neutral-500 tracking-widest uppercase mb-1 font-mono">
-              Clearance status
-            </div>
-            <div className="text-sm text-yellow-400 font-mono font-bold">
-              ACTIVE — NO RE-INTAKE REQUIRED
-            </div>
+          <div className="vb-cell">
+            <div className="vb-cell-label">Assigned section</div>
+            <div className="vb-cell-val" style={{ color: 'var(--c-muted)' }}>{profile.assigned_section}</div>
           </div>
         </div>
-      )}
 
-      {/* actions */}
-      <div className="space-y-3">
-        <button
-          onClick={onEnter}
-          className="
-            w-full py-4 bg-white text-black font-black tracking-widest text-sm
-            hover:bg-yellow-400 transition-colors duration-200 font-mono
-          "
-        >
-          {isNew ? 'ENTER THE COMPENDIUM' : 'RESUME SESSION, ENTER THE COMPENDIUM'}
-        </button>
-
-        {!isNew && onReissue && (
-          <button
-            onClick={onReissue}
-            className="
-              w-full py-3 border border-neutral-700 text-neutral-500 text-xs
-              tracking-widest hover:border-neutral-500 hover:text-neutral-400
-              transition-colors duration-200 font-mono
-            "
-          >
-            This is not me. Generate a new profile.
-          </button>
+        {isNew && summaryParagraphs.length > 0 && (
+          <div className="vb-assessment">
+            <div className="vb-assessment-label">Behavioral assessment</div>
+            {summaryParagraphs.map((para, i) => (
+              <p key={i} style={{
+                fontFamily: "'DM Sans', sans-serif",
+                fontSize: i === summaryParagraphs.length - 1 ? '11px' : '13px',
+                lineHeight: 1.75, marginBottom: i < summaryParagraphs.length - 1 ? '14px' : 0,
+                color: i === summaryParagraphs.length - 1 ? 'var(--c-accent)' : 'var(--c-muted)',
+                fontWeight: i === summaryParagraphs.length - 1 ? 600 : 300,
+                letterSpacing: i === summaryParagraphs.length - 1 ? '0.5px' : 'normal',
+              }}>{para}</p>
+            ))}
+          </div>
         )}
 
-        <div className="text-xs text-neutral-700 text-center font-mono">
-          {isNew
-            ? 'All intake data expires in 24 hours. We retain nothing. This was always going to be true.'
-            : 'This profile exists for 24 hours, after which it will be destroyed entirely. This is not a metaphor. The data will simply be gone.'}
+        {!isNew && (
+          <div className="vb-clearance">
+            <div className="vb-clearance-icon">
+              <div className="vb-clearance-dot" />
+            </div>
+            <div>
+              <div className="vb-clearance-label">Clearance status</div>
+              <div className="vb-clearance-val">ACTIVE — NO RE-INTAKE REQUIRED</div>
+            </div>
+          </div>
+        )}
+
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+          <button onClick={onEnter} className="vb-btn-primary">
+            {isNew ? 'ENTER THE COMPENDIUM' : 'RESUME SESSION, ENTER THE COMPENDIUM'}
+          </button>
+          {!isNew && onReissue && (
+            <button onClick={onReissue} className="vb-btn-secondary">
+              This is not me. Generate a new profile.
+            </button>
+          )}
+          <p className="vb-fine">
+            {isNew
+              ? 'All intake data expires in 24 hours. We retain nothing. This was always going to be true.'
+              : 'This profile exists for 24 hours, after which it will be destroyed entirely. The data will simply be gone.'}
+          </p>
         </div>
       </div>
-    </div>
+    </>
   )
 }

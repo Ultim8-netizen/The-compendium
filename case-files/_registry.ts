@@ -99,7 +99,6 @@ export const CASE_FILES: CaseFileMeta[] = [
     threatLevel: 'CRITICAL',
     tags: ['writing', 'self-help', 'fraud confirmed'],
   },
-  // ── new entries ──────────────────────────────────────────────────────────
   {
     slug: 'trial-transcript',
     title: 'THE STATE v. DEFENDANT [REDACTED]',
@@ -117,5 +116,14 @@ export const CASE_FILES: CaseFileMeta[] = [
     department: 'Dept. of Involuntary Commerce & Product Disposal',
     threatLevel: 'MODERATE',
     tags: ['product advertisement', 'highly flammable', 'seller in distress'],
+  },
+  {
+    slug: 'the-noise-outside',
+    title: 'THE NOISE OUTSIDE',
+    subtitle: 'Three Groups. One Window. A Minister Who Has Thoughts About Civilization.',
+    classificationCode: 'MR-XII-4-FIC',
+    department: 'Dept. of Political Satire & Civilized Animals',
+    threatLevel: 'TERMINAL',
+    tags: ['short fiction', 'political satire', 'severe irony'],
   },
 ]

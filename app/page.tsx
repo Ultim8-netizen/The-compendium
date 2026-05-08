@@ -10,28 +10,25 @@ function sampleFiles(n: number): CaseFileMeta[] {
 }
 
 const THREAT_COLOR: Record<string, { color: string; borderColor: string }> = {
-  LOW:      { color: '#4ade80', borderColor: '#14532d' },
-  MODERATE: { color: '#facc15', borderColor: '#713f12' },
-  CRITICAL: { color: '#fb923c', borderColor: '#7c2d12' },
-  TERMINAL: { color: '#f87171', borderColor: '#7f1d1d' },
+  LOW:      { color: '#16a34a', borderColor: '#16a34a' },
+  MODERATE: { color: '#d97706', borderColor: '#d97706' },
+  CRITICAL: { color: '#ea580c', borderColor: '#ea580c' },
+  TERMINAL: { color: '#dc2626', borderColor: '#dc2626' },
 }
 
 export default function LandingPage() {
   const router = useRouter()
-  const [ready, setReady] = useState(false)
+  const [ready,   setReady]   = useState(false)
   const [exiting, setExiting] = useState(false)
-  const [sample] = useState<CaseFileMeta[]>(() => sampleFiles(3))
+  const [sample]  = useState<CaseFileMeta[]>(() => sampleFiles(3))
 
   useEffect(() => {
     let mounted = true
     async function checkVisitor() {
       await Promise.resolve()
       if (!mounted) return
-      if (getVisitorId()) {
-        router.replace('/compendium')
-      } else {
-        setReady(true)
-      }
+      if (getVisitorId()) { router.replace('/compendium') }
+      else { setReady(true) }
     }
     checkVisitor()
     return () => { mounted = false }
@@ -53,13 +50,16 @@ export default function LandingPage() {
         @keyframes lp-in   { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes lp-exit { from { opacity: 1; } to { opacity: 0; } }
         @keyframes lp-blink { 0%,49%{opacity:1} 50%,100%{opacity:0} }
-        @keyframes stamp-in { 0% { opacity: 0; transform: translate(-50%, -50%) rotate(-4deg) scale(1.15); } 100% { opacity: 1; transform: translate(-50%, -50%) rotate(-4deg) scale(1); } }
+        @keyframes stamp-in {
+          0%   { opacity:0; transform:translate(-50%,-50%) rotate(-4deg) scale(1.15); }
+          100% { opacity:1; transform:translate(-50%,-50%) rotate(-4deg) scale(1); }
+        }
 
         .lp-root {
           min-height: 100dvh;
-          background: #0a0a0a;
-          color: #e5e5e5;
-          font-family: 'Courier New', Courier, monospace;
+          background: var(--c-bg);
+          color: var(--c-fg);
+          font-family: 'DM Sans', sans-serif;
           display: flex;
           flex-direction: column;
           align-items: center;
@@ -67,6 +67,7 @@ export default function LandingPage() {
           animation: lp-in 0.6s ease both;
           position: relative;
           overflow: hidden;
+          transition: background 0.25s ease, color 0.25s ease;
         }
         .lp-root.exiting {
           animation: lp-exit 0.42s ease both;
@@ -76,47 +77,53 @@ export default function LandingPage() {
         .lp-inner { width: 100%; max-width: 600px; position: relative; }
 
         .lp-hook {
+          font-family: 'DM Mono', monospace;
           font-size: 11px;
           letter-spacing: 2px;
-          color: #facc15;
+          color: var(--c-accent);
           text-transform: uppercase;
           margin-bottom: 28px;
           line-height: 1.6;
         }
 
         .lp-title {
-          font-size: clamp(48px, 13vw, 80px);
-          font-weight: 900;
-          color: #fff;
+          font-family: 'Cormorant Garamond', serif;
+          font-size: clamp(52px, 13vw, 88px);
+          font-weight: 300;
+          color: var(--c-fg);
           letter-spacing: -2px;
-          line-height: 0.95;
+          line-height: 0.92;
           margin-bottom: 32px;
         }
 
         .lp-pitch {
+          font-family: 'DM Sans', sans-serif;
           font-size: 15px;
           line-height: 2;
-          color: #777;
+          color: var(--c-muted);
           margin-bottom: 48px;
+          font-weight: 300;
         }
-        .lp-pitch strong { color: #ccc; font-weight: 700; }
-        .lp-pitch em { color: #555; font-style: normal; }
+        .lp-pitch strong { color: var(--c-fg); font-weight: 600; }
+        .lp-pitch em     { color: var(--c-subtle); font-style: normal; }
 
-        .lp-divider { height: 1px; background: #161616; margin-bottom: 32px; }
+        .lp-divider { height: 1px; background: var(--c-border); margin-bottom: 32px; }
 
         .lp-files { display: flex; flex-direction: column; margin-bottom: 40px; }
 
         .lp-file {
-          border-bottom: 1px solid #111;
+          border-bottom: 1px solid var(--c-border);
           padding: 18px 0;
           display: grid;
           grid-template-columns: 72px 1fr;
           gap: 18px;
           align-items: start;
+          transition: background 0.15s;
         }
-        .lp-file:first-child { border-top: 1px solid #111; }
+        .lp-file:first-child { border-top: 1px solid var(--c-border); }
 
         .lp-file-tag {
+          font-family: 'DM Mono', monospace;
           font-size: 8px;
           letter-spacing: 1.5px;
           text-transform: uppercase;
@@ -128,59 +135,63 @@ export default function LandingPage() {
         }
 
         .lp-file-dept {
+          font-family: 'DM Mono', monospace;
           font-size: 9px;
           letter-spacing: 1.5px;
           text-transform: uppercase;
-          color: #2e2e2e;
+          color: var(--c-subtle);
           margin-bottom: 5px;
         }
 
         .lp-file-title {
-          font-size: 12px;
+          font-family: 'DM Sans', sans-serif;
+          font-size: 13px;
           font-weight: 700;
-          color: #aaa;
+          color: var(--c-muted);
           margin-bottom: 4px;
           line-height: 1.4;
         }
 
         .lp-file-subtitle {
+          font-family: 'DM Sans', sans-serif;
           font-size: 11px;
           line-height: 1.6;
-          color: #3a3a3a;
+          color: var(--c-subtle);
         }
 
         .lp-cta {
           width: 100%;
           padding: 18px;
-          background: #fff;
+          background: var(--c-fg);
           border: none;
-          color: #000;
-          font-family: 'Courier New', Courier, monospace;
+          color: var(--c-bg);
+          font-family: 'DM Mono', monospace;
           font-size: 11px;
-          font-weight: 900;
+          font-weight: 500;
           letter-spacing: 5px;
           text-transform: uppercase;
           cursor: pointer;
-          transition: background 0.15s;
+          transition: background 0.15s, color 0.15s;
           display: flex;
           align-items: center;
           justify-content: center;
           gap: 12px;
           margin-bottom: 16px;
         }
-        .lp-cta:hover { background: #facc15; }
+        .lp-cta:hover { background: var(--c-accent); color: var(--c-accent-fg); }
 
         .lp-cursor {
           display: inline-block;
           width: 8px;
           height: 13px;
-          background: #000;
+          background: currentColor;
           animation: lp-blink 1.1s step-end infinite;
         }
 
         .lp-fine {
+          font-family: 'DM Mono', monospace;
           font-size: 10px;
-          color: #242424;
+          color: var(--c-subtle);
           text-align: center;
           line-height: 1.9;
           letter-spacing: 0.5px;
@@ -188,38 +199,42 @@ export default function LandingPage() {
         }
 
         .lp-byline { display: flex; align-items: center; justify-content: center; gap: 10px; }
-        .lp-byline-line { height: 1px; width: 20px; background: #161616; }
-        .lp-byline-by { font-size: 9px; color: #222; letter-spacing: 3px; }
-        .lp-byline-name { font-size: 10px; font-weight: 900; color: #2a2a2a; letter-spacing: 4px; transition: color 0.3s; }
-        .lp-byline-name:hover { color: #555; }
+        .lp-byline-line { height: 1px; width: 20px; background: var(--c-border); }
+        .lp-byline-by   { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--c-subtle); letter-spacing: 3px; }
+        .lp-byline-name {
+          font-family: 'DM Mono', monospace;
+          font-size: 10px; font-weight: 500;
+          color: var(--c-muted); letter-spacing: 4px;
+          transition: color 0.3s;
+        }
+        .lp-byline-name:hover { color: var(--c-fg); }
 
         .lp-stamp {
           position: fixed;
-          top: 50%;
-          left: 50%;
+          top: 50%; left: 50%;
           transform: translate(-50%, -50%) rotate(-4deg);
           border: 5px solid #dc2626;
           color: #dc2626;
-          font-size: clamp(22px, 5vw, 36px);
-          font-weight: 900;
+          font-family: 'DM Mono', monospace;
+          font-size: clamp(18px, 4vw, 32px);
+          font-weight: 700;
           letter-spacing: 6px;
           text-transform: uppercase;
           padding: 14px 32px;
           pointer-events: none;
           white-space: nowrap;
-          opacity: 0.12;
+          opacity: 0.08;
           z-index: 0;
-          animation: stamp-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.7s both;
+          animation: stamp-in 0.5s cubic-bezier(0.22,1,0.36,1) 0.7s both;
           user-select: none;
         }
 
         @media (max-width: 480px) {
-          .lp-file { grid-template-columns: 60px 1fr; gap: 12px; }
-          .lp-stamp { font-size: 18px; letter-spacing: 3px; padding: 10px 18px; }
+          .lp-file { grid-template-columns: 56px 1fr; gap: 12px; }
+          .lp-stamp { font-size: 16px; letter-spacing: 3px; padding: 10px 16px; }
         }
       `}</style>
 
-      {/* stamp — fixed behind everything, faint */}
       <div className="lp-stamp">CLEARANCE REQUIRED</div>
 
       <div className={`lp-root${exiting ? ' exiting' : ''}`}>
