@@ -48,7 +48,6 @@ export default function LandingPage() {
           align-items: center;
           justify-content: center;
 
-          /* layered gold depth */
           background:
             radial-gradient(ellipse at 50% 38%, rgba(200,148,26,0.28) 0%, transparent 58%),
             radial-gradient(ellipse at 18% 82%, rgba(160,100,10,0.12) 0%, transparent 38%),
@@ -56,7 +55,6 @@ export default function LandingPage() {
             linear-gradient(158deg, #0e0900 0%, #1c1300 28%, #160f00 55%, #0a0700 100%);
         }
 
-        /* brushed-metal grain — fine horizontal striations */
         .lp-root::before {
           content: '';
           position: absolute;
@@ -82,7 +80,6 @@ export default function LandingPage() {
           overflow: hidden;
         }
 
-        /* broad soft beam */
         .lp-glint::before {
           content: '';
           position: absolute;
@@ -104,7 +101,6 @@ export default function LandingPage() {
           animation: gold-sweep 7s cubic-bezier(0.45, 0, 0.55, 1) infinite;
         }
 
-        /* narrow razor highlight riding just ahead */
         .lp-glint::after {
           content: '';
           position: absolute;
@@ -155,7 +151,6 @@ export default function LandingPage() {
           font-size: 52px;
           font-weight: 600;
           line-height: 1;
-          /* metallic but very faint — decorative */
           color: rgba(180,120,10,0.18);
           letter-spacing: -2px;
         }
@@ -196,10 +191,10 @@ export default function LandingPage() {
 
         .lp-title {
           font-family: 'Cormorant Garamond', serif;
-          font-size: clamp(76px, 15vw, 160px);
+          font-size: clamp(52px, 13vw, 160px);
           font-weight: 600;
           line-height: 0.88;
-          letter-spacing: -4px;
+          letter-spacing: -3px;
           margin: 0;
 
           background: linear-gradient(
@@ -229,7 +224,7 @@ export default function LandingPage() {
           gap: 16px;
           width: 100%;
           max-width: 440px;
-          margin: 40px auto;
+          margin: 36px auto;
           animation: fade-up 0.8s ease 0.4s both;
         }
 
@@ -249,13 +244,14 @@ export default function LandingPage() {
 
         .lp-tagline {
           font-family: 'Cormorant Garamond', serif;
-          font-size: clamp(16px, 2.4vw, 22px);
+          font-size: clamp(15px, 2.4vw, 22px);
           font-style: italic;
           font-weight: 300;
           color: #B07820;
           line-height: 1.75;
-          max-width: 500px;
-          margin: 0 0 52px;
+          max-width: 480px;
+          width: 100%;
+          margin: 0 0 48px;
           animation: fade-up 0.8s ease 0.5s both;
         }
 
@@ -264,16 +260,15 @@ export default function LandingPage() {
         .lp-cta {
           display: inline-flex;
           align-items: center;
-          gap: 16px;
-          padding: 17px 44px;
+          gap: 12px;
+          padding: 16px 36px;
           text-decoration: none;
           font-family: 'DM Mono', monospace;
           font-size: 10px;
           font-weight: 500;
-          letter-spacing: 6px;
+          letter-spacing: 5px;
           text-transform: uppercase;
 
-          /* engraved metallic button */
           background: linear-gradient(
             160deg,
             #1c1400 0%,
@@ -282,7 +277,6 @@ export default function LandingPage() {
             #181000 100%
           );
 
-          /* metallic gold text */
           color: #FFD700;
 
           border: 1px solid rgba(200,148,26,0.45);
@@ -294,7 +288,6 @@ export default function LandingPage() {
             cta-glow 3s ease-in-out 1.4s infinite;
         }
 
-        /* inner sweep on hover */
         .lp-cta::before {
           content: '';
           position: absolute;
@@ -310,7 +303,7 @@ export default function LandingPage() {
         }
 
         .lp-cta:hover::before   { transform: translateX(110%); }
-        .lp-cta:hover           { letter-spacing: 8px; border-color: rgba(255,215,0,0.7); color: #FFF8C0; }
+        .lp-cta:hover           { letter-spacing: 7px; border-color: rgba(255,215,0,0.7); color: #FFF8C0; }
         .lp-cta:hover .lp-arrow { transform: translateX(5px); }
 
         .lp-arrow {
@@ -322,7 +315,7 @@ export default function LandingPage() {
         /* ── fine print ─────────────────────────────────────────── */
 
         .lp-fine {
-          margin-top: 22px;
+          margin-top: 20px;
           font-family: 'DM Mono', monospace;
           font-size: 8px;
           letter-spacing: 3px;
@@ -362,28 +355,37 @@ export default function LandingPage() {
 
         /* ── responsive ─────────────────────────────────────────── */
 
-        @media (max-width: 480px) {
-          .lp-content  { padding: 80px 24px 60px; }
+        @media (max-width: 600px) {
+          .lp-content  { padding: 72px 24px 56px; }
           .lp-title    { letter-spacing: -2px; }
+          .lp-rule     { margin: 28px auto; }
           .lp-stamp    { top: 16px; left: 20px; }
           .lp-count    { top: 16px; right: 20px; }
           .lp-byline   { bottom: 20px; }
+          .lp-cta      { letter-spacing: 3px; padding: 14px 28px; }
+          .lp-eyebrow  { letter-spacing: 4px; margin-bottom: 24px; }
+        }
+
+        @media (max-width: 400px) {
+          .lp-stamp    { display: none; }
+          .lp-count    { display: none; }
+          .lp-content  { padding: 40px 20px 56px; }
+          .lp-title    { letter-spacing: -1px; }
+          .lp-cta      { letter-spacing: 2px; padding: 13px 22px; gap: 8px; }
+          .lp-fine     { letter-spacing: 1.5px; }
         }
 
       `}</style>
 
       <main className="lp-root">
 
-        {/* rolling light over the gold surface */}
         <div className="lp-glint" aria-hidden />
 
-        {/* top-left classification text */}
         <div className="lp-stamp" aria-hidden>
           <div className="lp-stamp-line">Classified</div>
           <div className="lp-stamp-line">Archive Ref: CMP-∞</div>
         </div>
 
-        {/* top-right file count */}
         <div className="lp-count" aria-hidden>
           <div className="lp-count-num">
             {String(CASE_FILES.length).padStart(2, '0')}
@@ -391,7 +393,6 @@ export default function LandingPage() {
           <div className="lp-count-label">Active Files</div>
         </div>
 
-        {/* ── centred content ── */}
         <div className="lp-content">
 
           <div className="lp-eyebrow">
@@ -424,7 +425,6 @@ export default function LandingPage() {
 
         </div>
 
-        {/* byline */}
         <div className="lp-byline">
           <div className="lp-byline-line" />
           <span className="lp-byline-text">ABYSSPROTOCOL</span>
