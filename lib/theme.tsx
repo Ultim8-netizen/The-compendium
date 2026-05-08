@@ -2,90 +2,51 @@
 
 import { createContext, useContext, useEffect, useState, type ReactNode } from 'react'
 
-export type DayTheme   = 'lemon' | 'pink' | 'light-blue' | 'yellow' | 'gold'
-export type NightTheme = 'deep-red' | 'deep-blue' | 'pitch-black'
-export type Theme = DayTheme | NightTheme
-export type Mode  = 'day' | 'night'
+export type Theme = 'gold' | 'rose' | 'cobalt' | 'obsidian'
 
-export const DAY_THEMES: { id: DayTheme; label: string; swatch: string }[] = [
-  { id: 'lemon',      label: 'Lemon',  swatch: '#FFF9C4' },
-  { id: 'pink',       label: 'Pink',   swatch: '#FFD6E0' },
-  { id: 'light-blue', label: 'Sky',    swatch: '#D0EEFF' },
-  { id: 'yellow',     label: 'Yellow', swatch: '#FFF0B0' },
-  { id: 'gold',       label: 'Gold',   swatch: '#F5E6C0' },
+export const THEMES: {
+  id: Theme
+  label: string
+  desc: string
+  swatch: string   // mid-tone for orb base
+  hi: string       // highlight for orb specular
+}[] = [
+  { id: 'gold',     label: 'Gold',     desc: 'Polished yellow gold',  swatch: '#C8941A', hi: '#FFF0A0' },
+  { id: 'rose',     label: 'Rose',     desc: 'Red gold alloy',        swatch: '#C07080', hi: '#FFD0DC' },
+  { id: 'cobalt',   label: 'Cobalt',   desc: 'Blue glass steel',      swatch: '#3878A8', hi: '#B0D8F0' },
+  { id: 'obsidian', label: 'Obsidian', desc: 'Black glass — violet',  swatch: '#604890', hi: '#D0B8F0' },
 ]
 
-export const NIGHT_THEMES: { id: NightTheme; label: string; swatch: string }[] = [
-  { id: 'deep-red',    label: 'Crimson', swatch: '#3a0808' },
-  { id: 'deep-blue',   label: 'Abyss',   swatch: '#080f2a' },
-  { id: 'pitch-black', label: 'Void',    swatch: '#111111' },
-]
+const DEFAULT: Theme = 'gold'
 
-const DEFAULT_DAY:   DayTheme   = 'gold'
-const DEFAULT_NIGHT: NightTheme = 'pitch-black'
-
-function resolveInitialMode(): Mode {
+function resolve(): Theme {
   try {
-    const saved = localStorage.getItem('compendium-mode') as Mode | null
-    if (saved) return saved
-    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'night' : 'day'
+    return (localStorage.getItem('compendium-theme') as Theme) || DEFAULT
   } catch {
-    return 'day'
-  }
-}
-
-function resolveInitialTheme(mode: Mode): Theme {
-  try {
-    const saved = localStorage.getItem('compendium-theme') as Theme | null
-    if (saved) return saved
-    return mode === 'night' ? DEFAULT_NIGHT : DEFAULT_DAY
-  } catch {
-    return DEFAULT_DAY
+    return DEFAULT
   }
 }
 
 interface ThemeCtx {
   theme: Theme
-  mode:  Mode
   setTheme: (t: Theme) => void
-  setMode:  (m: Mode)  => void
 }
 
-const Ctx = createContext<ThemeCtx>({
-  theme: DEFAULT_DAY,
-  mode: 'day',
-  setTheme: () => {},
-  setMode:  () => {},
-})
+const Ctx = createContext<ThemeCtx>({ theme: DEFAULT, setTheme: () => {} })
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [mode,  setModeState]  = useState<Mode>(resolveInitialMode)
-  const [theme, setThemeState] = useState<Theme>(() => resolveInitialTheme(resolveInitialMode()))
+  const [theme, setThemeState] = useState<Theme>(resolve)
 
-  // Effect is now only responsible for syncing DOM attributes — no setState calls
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme)
-    document.documentElement.setAttribute('data-mode',  mode)
-  }, [theme, mode])
+  }, [theme])
 
   function setTheme(t: Theme) {
     setThemeState(t)
-    localStorage.setItem('compendium-theme', t)
+    try { localStorage.setItem('compendium-theme', t) } catch {}
   }
 
-  function setMode(m: Mode) {
-    setModeState(m)
-    localStorage.setItem('compendium-mode', m)
-    const isDayTheme = DAY_THEMES.some(d => d.id === theme)
-    if (m === 'day'   && !isDayTheme) setThemeState(DEFAULT_DAY)
-    if (m === 'night' &&  isDayTheme) setThemeState(DEFAULT_NIGHT)
-  }
-
-  return (
-    <Ctx.Provider value={{ theme, mode, setTheme, setMode }}>
-      {children}
-    </Ctx.Provider>
-  )
+  return <Ctx.Provider value={{ theme, setTheme }}>{children}</Ctx.Provider>
 }
 
 export function useTheme() { return useContext(Ctx) }

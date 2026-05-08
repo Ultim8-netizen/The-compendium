@@ -32,7 +32,7 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://the-compendium-eight.vercel.app'),
   openGraph: {
     title: 'The Compendium',
-    description: 'Enter if you have been cleared. Clearance takes 90 seconds.',
+    description: 'A classified archive of deeply unnecessary human behavioral intelligence.',
     type: 'website',
     url: 'https://the-compendium-eight.vercel.app',
     siteName: 'The Compendium',
@@ -41,21 +41,24 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'The Compendium',
-    description: 'Enter if you have been cleared. Clearance takes 90 seconds.',
+    description: 'A classified archive of deeply unnecessary human behavioral intelligence.',
   },
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${cormorant.variable} ${dmSans.variable} ${dmMono.variable}`}>
+    <html
+      lang="en"
+      data-theme="gold"
+      className={`${cormorant.variable} ${dmSans.variable} ${dmMono.variable}`}
+    >
       <head>
+        {/* Flash-prevention: apply saved theme before first paint */}
         <script dangerouslySetInnerHTML={{ __html: `
           (function(){
             try {
-              var t = localStorage.getItem('compendium-theme') || 'gold';
-              var m = localStorage.getItem('compendium-mode')  || 'day';
-              document.documentElement.setAttribute('data-theme', t);
-              document.documentElement.setAttribute('data-mode',  m);
+              var t = localStorage.getItem('compendium-theme');
+              if (t) document.documentElement.setAttribute('data-theme', t);
             } catch(e) {}
           })();
         `}} />
