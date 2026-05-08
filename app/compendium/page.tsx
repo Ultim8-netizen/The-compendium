@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { CASE_FILES } from '@/case-files/_registry'
 import CaseFileCard from '@/components/CaseFileCard'
 
@@ -5,254 +6,273 @@ export default function CompendiumPage() {
   return (
     <>
       <style>{`
-        .cp-root {
-          min-height: 100vh;
-          background: var(--c-bg);
-          color: var(--c-fg);
-          font-family: 'DM Sans', sans-serif;
-          position: relative;
-          overflow: hidden;
-          transition: background 0.25s ease, color 0.25s ease;
+        @keyframes lp-glint-sweep {
+          0%   { left: -55%; opacity: 0; }
+          8%   { opacity: 1; }
+          92%  { opacity: 1; }
+          100% { left: 130%; opacity: 0; }
+        }
+        @keyframes lp-glint-fine {
+          0%   { left: -55%; opacity: 0; }
+          8%   { opacity: 0.7; }
+          92%  { opacity: 0.7; }
+          100% { left: 130%; opacity: 0; }
+        }
+        @keyframes cp-fade-up {
+          from { opacity: 0; transform: translateY(14px); }
+          to   { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes cp-diamond-pulse {
+          0%, 100% { opacity: 0.4; }
+          50%       { opacity: 1; }
         }
 
-        /* warm top canopy bar */
-        .cp-canopy {
-          background: linear-gradient(135deg, #1c1008 0%, #2a1a08 60%, #1c1008 100%);
-          padding: 18px 28px 16px;
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          flex-wrap: wrap;
-          gap: 10px;
-          border-bottom: 2px solid rgba(200,148,26,0.3);
+        .cp-root {
+          min-height: 100vh;
           position: relative;
           overflow: hidden;
+          background:
+            radial-gradient(ellipse at 50% 0%,   rgba(200,148,26,0.22) 0%, transparent 55%),
+            radial-gradient(ellipse at 10% 80%,  rgba(160,100,10,0.10) 0%, transparent 38%),
+            radial-gradient(ellipse at 90% 20%,  rgba(220,180,30,0.08) 0%, transparent 38%),
+            linear-gradient(158deg, #0e0900 0%, #1c1300 28%, #160f00 55%, #0a0700 100%);
+          color: var(--c-fg);
+          font-family: 'DM Sans', sans-serif;
         }
-        .cp-canopy::before {
+
+        .cp-root::before {
           content: '';
           position: absolute;
           inset: 0;
-          background: repeating-linear-gradient(
-            90deg, transparent, transparent 60px,
-            rgba(200,148,26,0.04) 60px, rgba(200,148,26,0.04) 61px
+          background-image: repeating-linear-gradient(
+            0deg, transparent, transparent 3px,
+            rgba(200,148,26,0.009) 3px, rgba(200,148,26,0.009) 4px
           );
+          pointer-events: none;
+          z-index: 1;
         }
-        .cp-canopy-left {
+
+        .cp-glint {
+          position: absolute;
+          inset: 0;
+          pointer-events: none;
+          z-index: 2;
+          overflow: hidden;
+        }
+        .cp-glint::before {
+          content: '';
+          position: absolute;
+          top: -20%; left: -55%;
+          width: 40%; height: 140%;
+          background: linear-gradient(
+            90deg,
+            transparent 0%,
+            rgba(255,250,180,0.03) 25%,
+            rgba(255,252,200,0.09) 46%,
+            rgba(255,255,240,0.16) 50%,
+            rgba(255,252,200,0.09) 54%,
+            rgba(255,250,180,0.03) 75%,
+            transparent 100%
+          );
+          transform: skewX(-11deg);
+          animation: lp-glint-sweep 9s cubic-bezier(0.45,0,0.55,1) infinite;
+        }
+        .cp-glint::after {
+          content: '';
+          position: absolute;
+          top: -20%; left: -55%;
+          width: 10%; height: 140%;
+          background: linear-gradient(
+            90deg,
+            transparent 0%,
+            rgba(255,255,220,0.10) 50%,
+            transparent 100%
+          );
+          transform: skewX(-11deg);
+          animation: lp-glint-fine 9s cubic-bezier(0.45,0,0.55,1) 0.3s infinite;
+        }
+
+        .cp-inner {
+          position: relative;
+          z-index: 3;
+          max-width: 1100px;
+          margin: 0 auto;
+          padding: 0 28px 80px;
+        }
+
+        .cp-header {
           display: flex;
           align-items: center;
-          gap: 10px;
+          justify-content: space-between;
+          padding: 32px 0 0;
+          flex-wrap: wrap;
+          gap: 12px;
+          animation: cp-fade-up 0.8s ease 0.1s both;
         }
-        .cp-canopy-leaf { font-size: 18px; }
-        .cp-canopy-name {
-          font-family: 'Cormorant Garamond', serif;
-          font-size: 20px;
-          font-weight: 400;
-          color: #f5e8c0;
-          letter-spacing: 1px;
-        }
-        .cp-canopy-name em {
-          font-style: italic;
-          color: #c8941a;
-        }
-        .cp-canopy-right {
+
+        .cp-back {
           font-family: 'DM Mono', monospace;
           font-size: 9px;
           letter-spacing: 3px;
           text-transform: uppercase;
-          color: #6a4a18;
+          color: #5A3E10;
+          text-decoration: none;
+          transition: color 0.2s;
+        }
+        .cp-back:hover { color: #C8941A; }
+
+        .cp-nav-right {
+          font-family: 'DM Mono', monospace;
+          font-size: 9px;
+          letter-spacing: 3px;
+          text-transform: uppercase;
+          color: #3A2808;
         }
 
-        /* page background — subtle forest texture */
-        .cp-bg-art {
-          position: absolute;
-          inset: 0;
-          pointer-events: none;
-          z-index: 0;
-          overflow: hidden;
-        }
-
-        .cp-inner {
-          max-width: 960px;
-          margin: 0 auto;
-          padding: 48px 24px 64px;
-          position: relative;
-          z-index: 1;
-        }
-
-        .cp-header {
+        .cp-hero {
           text-align: center;
-          margin-bottom: 48px;
-        }
-
-        .cp-header-ornament {
-          font-size: 32px;
-          margin-bottom: 14px;
-          display: block;
+          padding: 56px 0 52px;
+          animation: cp-fade-up 0.9s ease 0.15s both;
         }
 
         .cp-eyebrow {
           font-family: 'DM Mono', monospace;
           font-size: 9px;
-          letter-spacing: 5px;
+          letter-spacing: 6px;
           text-transform: uppercase;
-          color: var(--c-subtle);
-          margin-bottom: 12px;
+          color: #7A5A14;
+          margin-bottom: 28px;
         }
 
         .cp-title {
           font-family: 'Cormorant Garamond', serif;
-          font-size: clamp(44px, 9vw, 72px);
-          font-weight: 300;
-          color: var(--c-fg);
-          margin-bottom: 8px;
-          letter-spacing: -1px;
-          line-height: 1;
+          font-size: clamp(56px, 10vw, 96px);
+          font-weight: 600;
+          line-height: 0.9;
+          letter-spacing: -3px;
+          margin: 0 0 6px;
+          background: linear-gradient(
+            158deg,
+            #3A2208  0%,
+            #7A5A14 12%,
+            #C8941A 26%,
+            #FFD700 40%,
+            #FFF8C0 50%,
+            #FFD700 60%,
+            #C8941A 74%,
+            #7A5A14 88%,
+            #3A2208 100%
+          );
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
         }
 
-        .cp-title em {
-          font-style: italic;
-          color: var(--c-accent);
-        }
-
-        .cp-floral {
+        .cp-rule {
           display: flex;
           align-items: center;
           gap: 14px;
           justify-content: center;
-          margin: 18px 0 16px;
+          margin: 28px 0 22px;
         }
-        .cp-floral-line {
+        .cp-rule-line {
           height: 1px;
-          width: 48px;
-          background: linear-gradient(90deg, transparent, var(--c-border), transparent);
+          width: 60px;
+          background: linear-gradient(90deg, transparent, rgba(200,148,26,0.5), transparent);
         }
-        .cp-floral-center { font-size: 16px; }
+        .cp-rule-diamond {
+          font-size: 8px;
+          color: #C8941A;
+          animation: cp-diamond-pulse 3.5s ease-in-out infinite;
+        }
 
         .cp-sub {
-          font-family: 'DM Sans', sans-serif;
-          color: var(--c-muted);
-          font-size: 14px;
+          font-family: 'Cormorant Garamond', serif;
+          font-size: clamp(16px, 2.2vw, 20px);
+          font-style: italic;
           font-weight: 300;
-          line-height: 1.8;
-          max-width: 460px;
+          color: #B07820;
+          line-height: 1.7;
+          max-width: 480px;
           margin: 0 auto;
         }
 
         .cp-grid {
           display: grid;
-          gap: 12px;
-          grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-          margin-bottom: 52px;
+          gap: 10px;
+          grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+          animation: cp-fade-up 0.9s ease 0.3s both;
         }
 
         .cp-footer {
-          border-top: 1px solid var(--c-border);
-          padding-top: 28px;
+          margin-top: 64px;
           text-align: center;
+          animation: cp-fade-up 0.9s ease 0.4s both;
         }
+
+        .cp-footer-rule {
+          display: flex;
+          align-items: center;
+          gap: 14px;
+          justify-content: center;
+          margin-bottom: 22px;
+        }
+        .cp-footer-rule-line {
+          height: 1px;
+          width: 40px;
+          background: rgba(200,148,26,0.2);
+        }
+        .cp-footer-rule-dot { font-size: 7px; color: #4A3008; }
 
         .cp-footer-text {
           font-family: 'DM Mono', monospace;
-          font-size: 10px;
-          color: var(--c-subtle);
-          letter-spacing: 1px;
-          line-height: 2.2;
+          font-size: 9px;
+          color: #2A1808;
+          letter-spacing: 1.5px;
+          line-height: 2.4;
+          text-transform: uppercase;
         }
 
         .cp-byline {
           display: flex;
           align-items: center;
           justify-content: center;
-          gap: 10px;
-          margin-top: 18px;
+          gap: 14px;
+          margin-top: 20px;
         }
-        .cp-byline-line { height: 1px; width: 20px; background: var(--c-border); }
-        .cp-byline-by   {
+        .cp-byline-line { height: 1px; width: 24px; background: #1c1000; }
+        .cp-byline-text {
           font-family: 'DM Mono', monospace;
-          font-size: 9px; color: var(--c-subtle); letter-spacing: 3px;
+          font-size: 9px;
+          letter-spacing: 5px;
+          text-transform: uppercase;
+          color: #2A1808;
         }
-        .cp-byline-name {
-          font-family: 'DM Mono', monospace;
-          font-size: 10px; font-weight: 500;
-          color: var(--c-subtle); letter-spacing: 4px;
-          transition: color 0.3s;
-        }
-        .cp-byline-name:hover { color: var(--c-fg); }
-
-        /* corner leaf decorations */
-        .cp-corner {
-          position: absolute;
-          pointer-events: none;
-          opacity: 0.07;
-          font-size: 80px;
-          user-select: none;
-          z-index: 0;
-        }
-        .cp-corner-tl { top: 80px; left: 10px; transform: rotate(-20deg); }
-        .cp-corner-tr { top: 80px; right: 10px; transform: rotate(20deg) scaleX(-1); }
-        .cp-corner-bl { bottom: 20px; left: 10px; transform: rotate(20deg); }
-        .cp-corner-br { bottom: 20px; right: 10px; transform: rotate(-20deg) scaleX(-1); }
       `}</style>
 
       <div className="cp-root">
-
-        {/* Background art */}
-        <div className="cp-bg-art" aria-hidden>
-          <svg viewBox="0 0 1200 900" style={{width:'100%',height:'100%',position:'absolute',inset:0}} preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-            <radialGradient id="cp-sun" cx="70%" cy="-10%" r="60%">
-              <stop offset="0%" stopColor="#ffe080" stopOpacity="0.14" />
-              <stop offset="100%" stopColor="#ffe080" stopOpacity="0" />
-            </radialGradient>
-            <rect width="1200" height="900" fill="url(#cp-sun)" />
-            {[80,200,320,900,1020,1140].map((x,i)=>(
-              <g key={i} opacity={0.045 + (i%2)*0.02}>
-                <polygon points={`${x},900 ${x-30},600 ${x+30},600`} fill="#2a4a18" />
-                <polygon points={`${x},680 ${x-22},500 ${x+22},500`} fill="#3a5a20" />
-                <polygon points={`${x+2},560 ${x-16},400 ${x+20},400`} fill="#4a6828" />
-              </g>
-            ))}
-            {/* scattered flowers */}
-            {[140,300,500,700,900,1060].map((x,i)=>(
-              <g key={i} opacity="0.09">
-                <circle cx={x} cy={860} r={7} fill={['#f9d44a','#f4a0b0','#ffffff'][i%3]} />
-                <line x1={x} y1={860} x2={x} y2={900} stroke="#5a7a30" strokeWidth="1.5" />
-              </g>
-            ))}
-          </svg>
-        </div>
-
-        {/* Corner leaves */}
-        <div className="cp-corner cp-corner-tl" aria-hidden>🌿</div>
-        <div className="cp-corner cp-corner-tr" aria-hidden>🌿</div>
-        <div className="cp-corner cp-corner-bl" aria-hidden>🍃</div>
-        <div className="cp-corner cp-corner-br" aria-hidden>🍃</div>
-
-        {/* Canopy nav */}
-        <div className="cp-canopy">
-          <div className="cp-canopy-left">
-            <span className="cp-canopy-leaf">🌿</span>
-            <span className="cp-canopy-name">The <em>Compendium</em></span>
-          </div>
-          <div className="cp-canopy-right">Active Archive · {CASE_FILES.length} files</div>
-        </div>
+        <div className="cp-glint" aria-hidden />
 
         <div className="cp-inner">
 
           <div className="cp-header">
-            <span className="cp-header-ornament">📚</span>
-            <div className="cp-eyebrow">The Library Between the Trees</div>
-            <h1 className="cp-title">
-              The <em>Compendium</em>
-            </h1>
-            <div className="cp-floral">
-              <div className="cp-floral-line" />
-              <span className="cp-floral-center">🌸 ✦ 🌸</span>
-              <div className="cp-floral-line" />
+           <Link href="/" className="cp-back">← The Compendium</Link>
+            <div className="cp-nav-right">
+              Archive · {CASE_FILES.length} active files
+            </div>
+          </div>
+
+          <div className="cp-hero">
+            <div className="cp-eyebrow">Classified Repository · Restricted Access</div>
+            <h1 className="cp-title">THE<br />COMPENDIUM</h1>
+            <div className="cp-rule">
+              <div className="cp-rule-line" />
+              <div className="cp-rule-diamond">◆</div>
+              <div className="cp-rule-line" />
             </div>
             <p className="cp-sub">
               {CASE_FILES.length} active files. Each one documents something
               deeply, profoundly human. None of it was asked for.
-              All of it was necessary.
             </p>
           </div>
 
@@ -263,15 +283,18 @@ export default function CompendiumPage() {
           </div>
 
           <div className="cp-footer">
+            <div className="cp-footer-rule">
+              <div className="cp-footer-rule-line" />
+              <div className="cp-footer-rule-dot">◆</div>
+              <div className="cp-footer-rule-line" />
+            </div>
             <p className="cp-footer-text">
               All profiles collected at entry expire within 24 hours.<br />
-              We keep none of it. This was always going to be true.<br />
-              The trees don&apos;t either.
+              We keep none of it. This was always going to be true.
             </p>
             <div className="cp-byline">
               <div className="cp-byline-line" />
-              <span className="cp-byline-by">by</span>
-              <span className="cp-byline-name">ABYSSPROTOCOL</span>
+              <span className="cp-byline-text">ABYSSPROTOCOL</span>
               <div className="cp-byline-line" />
             </div>
           </div>

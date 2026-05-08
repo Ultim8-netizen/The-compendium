@@ -1,150 +1,303 @@
 import Link from 'next/link'
 import type { CaseFileMeta } from '@/case-files/_registry'
 
-const THREAT: Record<string, { color: string }> = {
-  LOW:      { color: '#16a34a' },
-  MODERATE: { color: '#d97706' },
-  CRITICAL: { color: '#ea580c' },
-  TERMINAL: { color: '#dc2626' },
+/* ─── Per-department gold accent palette ─────────────────────────── */
+const DEPT_ACCENT: Record<string, { glyph: string; hue: string; label: string }> = {
+  'Dept. of Conversational Threat Assessment':        { glyph: '◎', hue: '#C8941A', label: 'ORAL' },
+  'Dept. of Intergenerational Humor Trauma':          { glyph: '⟡', hue: '#B87A00', label: 'HUMOR' },
+  'Division of Intergenerational Humor Trauma':       { glyph: '⟡', hue: '#B87A00', label: 'HUMOR' },
+  'Dept. of Academic Endurance':                      { glyph: '◈', hue: '#A06010', label: 'ACADEMIC' },
+  'Office of Curricular Integrity & Narrative Containment': { glyph: '⊡', hue: '#8A5208', label: 'CURRICULAR' },
+  'Public Conduct Authority':                         { glyph: '◉', hue: '#9A7820', label: 'PUBLIC' },
+  'Dept. of Romantic Threat Assessment':              { glyph: '◇', hue: '#D4A020', label: 'ROMANTIC' },
+  'Dept. of Professional Conduct & Etiquette':        { glyph: '⬡', hue: '#C89030', label: 'CONDUCT' },
+  'Dept. of Eternal & Irrevocable Services':          { glyph: '◈', hue: '#7A4A08', label: 'ETERNAL' },
+  'Dept. of Literary Instruction & Controlled Demolition': { glyph: '⟐', hue: '#B08020', label: 'LITERARY' },
+  'Dept. of Romantic Jurisprudence':                  { glyph: '◎', hue: '#C87820', label: 'JURIDICAL' },
+  'Dept. of Involuntary Commerce & Product Disposal': { glyph: '⊞', hue: '#8A6A00', label: 'COMMERCE' },
+  'Dept. of Political Satire & Civilized Animals':    { glyph: '⬢', hue: '#A88A10', label: 'SATIRE' },
 }
 
-const THREAT_FILL: Record<string, string> = {
-  LOW: '25%', MODERATE: '50%', CRITICAL: '75%', TERMINAL: '100%',
-}
+const DEFAULT_ACCENT = { glyph: '◆', hue: '#C8941A', label: 'FILE' }
 
 interface Props { file: CaseFileMeta; index?: number }
 
 export default function CaseFileCard({ file, index = 0 }: Props) {
-  const t    = THREAT[file.threatLevel]      ?? THREAT.MODERATE
-  const fill = THREAT_FILL[file.threatLevel] ?? '50%'
+  const accent = DEPT_ACCENT[file.department] ?? DEFAULT_ACCENT
+  const num    = String(index + 1).padStart(2, '0')
 
   return (
     <>
       <style>{`
-        .cfc-wrap {
-          display: block; text-decoration: none;
+        @keyframes cfc-shimmer {
+          0%   { transform: translateX(-180%) skewX(-12deg); }
+          100% { transform: translateX(180%)  skewX(-12deg); }
+        }
+
+        .cfc {
+          display: block;
+          text-decoration: none;
           position: relative;
-          border: 1px solid var(--c-border);
-          background: var(--c-card);
           overflow: hidden;
-          transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+          background: linear-gradient(
+            145deg,
+            rgba(255,255,255,0.022) 0%,
+            rgba(200,148,26,0.04)  50%,
+            rgba(255,255,255,0.012) 100%
+          );
+          border: 1px solid rgba(200,148,26,0.18);
+          border-top: 1px solid rgba(255,215,0,0.12);
           cursor: pointer;
+          transition:
+            border-color 0.25s,
+            box-shadow   0.25s,
+            background   0.25s;
         }
-        .cfc-wrap:hover {
-          border-color: var(--c-muted);
-          box-shadow: 0 4px 24px var(--c-shadow);
+
+        .cfc:hover {
+          border-color: rgba(200,148,26,0.55);
+          box-shadow:
+            0 0 0 1px rgba(200,148,26,0.12),
+            0 8px 32px rgba(200,148,26,0.14),
+            inset 0 1px 0 rgba(255,215,0,0.08);
+          background: linear-gradient(
+            145deg,
+            rgba(255,255,255,0.035) 0%,
+            rgba(200,148,26,0.07)  50%,
+            rgba(255,255,255,0.018) 100%
+          );
         }
-        .cfc-watermark {
-          position: absolute; bottom: 8px; right: 12px;
-          font-family: 'DM Mono', monospace;
-          font-size: 56px; font-weight: 700;
-          color: var(--c-border);
-          pointer-events: none; user-select: none; line-height: 1;
-          transition: color 0.2s;
+
+        /* shimmer sweep on hover */
+        .cfc::before {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(
+            90deg,
+            transparent          0%,
+            rgba(255,240,160,0.06) 40%,
+            rgba(255,248,180,0.14) 50%,
+            rgba(255,240,160,0.06) 60%,
+            transparent          100%
+          );
+          transform: translateX(-180%) skewX(-12deg);
+          pointer-events: none;
+          z-index: 1;
+          transition: none;
         }
-        .cfc-wrap:hover .cfc-watermark { color: var(--c-bg-secondary); }
-        .cfc-inner { padding: 20px; position: relative; z-index: 1; }
+        .cfc:hover::before {
+          animation: cfc-shimmer 0.6s ease forwards;
+        }
+
+        .cfc-accent-bar {
+          height: 2px;
+          width: 100%;
+          transition: opacity 0.25s;
+          opacity: 0.7;
+        }
+        .cfc:hover .cfc-accent-bar { opacity: 1; }
+
+        .cfc-body {
+          padding: 22px 24px 18px;
+          position: relative;
+          z-index: 2;
+        }
+
         .cfc-top {
-          display: flex; align-items: flex-start;
-          justify-content: space-between; gap: 8px; margin-bottom: 16px;
+          display: flex;
+          align-items: flex-start;
+          justify-content: space-between;
+          gap: 10px;
+          margin-bottom: 20px;
         }
-        .cfc-badge {
-          font-family: 'DM Mono', monospace;
-          font-size: 9px; font-weight: 700;
-          letter-spacing: 2px; text-transform: uppercase;
-          border: 1px solid; padding: 2px 8px; flex-shrink: 0;
+
+        .cfc-glyph-wrap {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 36px;
+          height: 36px;
+          border: 1px solid rgba(200,148,26,0.25);
+          flex-shrink: 0;
+          transition: border-color 0.2s, background 0.2s;
+          background: rgba(200,148,26,0.04);
         }
+        .cfc:hover .cfc-glyph-wrap {
+          border-color: rgba(200,148,26,0.5);
+          background: rgba(200,148,26,0.08);
+        }
+
+        .cfc-glyph {
+          font-size: 16px;
+          line-height: 1;
+          transition: transform 0.3s;
+        }
+        .cfc:hover .cfc-glyph { transform: scale(1.15) rotate(15deg); }
+
+        .cfc-meta {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-end;
+          gap: 3px;
+        }
+
+        .cfc-num {
+          font-family: 'Cormorant Garamond', serif;
+          font-size: 28px;
+          font-weight: 600;
+          line-height: 1;
+          letter-spacing: -1px;
+          background: linear-gradient(
+            135deg,
+            #3A2208 0%,
+            #7A5A14 30%,
+            #C8941A 60%,
+            #3A2208 100%
+          );
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+          opacity: 0.35;
+          transition: opacity 0.25s;
+        }
+        .cfc:hover .cfc-num { opacity: 0.65; }
+
         .cfc-code {
           font-family: 'DM Mono', monospace;
-          font-size: 9px; letter-spacing: 2px;
-          color: var(--c-subtle); text-align: right;
+          font-size: 8px;
+          letter-spacing: 1.5px;
+          color: #3A2808;
+          text-align: right;
         }
+
         .cfc-title {
           font-family: 'DM Sans', sans-serif;
-          font-size: 13px; font-weight: 700;
-          color: var(--c-fg);
-          line-height: 1.3; margin-bottom: 4px;
-          text-transform: uppercase; letter-spacing: 0.5px;
+          font-size: 12px;
+          font-weight: 700;
+          letter-spacing: 1px;
+          text-transform: uppercase;
+          color: #E8C060;
+          line-height: 1.3;
+          margin-bottom: 6px;
           transition: color 0.2s;
         }
-        .cfc-wrap:hover .cfc-title { color: var(--c-accent); }
+        .cfc:hover .cfc-title { color: #FFD700; }
+
         .cfc-subtitle {
-          font-family: 'DM Sans', sans-serif;
-          font-size: 11px; color: var(--c-muted);
-          margin-bottom: 14px; line-height: 1.5; font-weight: 300;
+          font-family: 'Cormorant Garamond', serif;
+          font-size: 14px;
+          font-style: italic;
+          font-weight: 300;
+          color: #8A6A20;
+          line-height: 1.55;
+          margin-bottom: 18px;
+          transition: color 0.2s;
         }
+        .cfc:hover .cfc-subtitle { color: #B07820; }
+
         .cfc-dept {
           font-family: 'DM Mono', monospace;
-          font-size: 9px; text-transform: uppercase;
-          letter-spacing: 2px; color: var(--c-subtle); margin-bottom: 12px;
+          font-size: 8px;
+          letter-spacing: 2px;
+          text-transform: uppercase;
+          color: #3A2808;
+          margin-bottom: 16px;
+          transition: color 0.2s;
         }
-        .cfc-meter-label {
-          display: flex; align-items: center; justify-content: space-between;
-          margin-bottom: 4px;
+        .cfc:hover .cfc-dept { color: #5A3E10; }
+
+        .cfc-tags {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 5px;
         }
-        .cfc-meter-txt {
-          font-family: 'DM Mono', monospace;
-          font-size: 8px; letter-spacing: 2px;
-          text-transform: uppercase; color: var(--c-subtle);
-        }
-        .cfc-track {
-          height: 1px; background: var(--c-border);
-          position: relative; margin-bottom: 14px;
-        }
-        .cfc-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+
         .cfc-tag {
           font-family: 'DM Mono', monospace;
-          font-size: 9px; letter-spacing: 1px;
-          color: var(--c-subtle);
-          border: 1px solid var(--c-border);
-          padding: 2px 7px;
-          transition: border-color 0.2s;
+          font-size: 8px;
+          letter-spacing: 1px;
+          text-transform: uppercase;
+          color: #4A3010;
+          border: 1px solid rgba(200,148,26,0.15);
+          padding: 3px 8px;
+          background: rgba(200,148,26,0.04);
+          transition: border-color 0.2s, color 0.2s, background 0.2s;
         }
-        .cfc-wrap:hover .cfc-tag { border-color: var(--c-muted); }
-        .cfc-action {
-          border-top: 1px solid var(--c-border);
-          padding: 10px 20px;
-          display: flex; align-items: center; justify-content: space-between;
-          opacity: 0; transition: opacity 0.2s;
-          background: var(--c-bg-secondary);
+        .cfc:hover .cfc-tag {
+          border-color: rgba(200,148,26,0.35);
+          color: #7A5A14;
+          background: rgba(200,148,26,0.07);
         }
-        .cfc-wrap:hover .cfc-action { opacity: 1; }
-        .cfc-action-txt {
+
+        .cfc-foot {
+          border-top: 1px solid rgba(200,148,26,0.1);
+          padding: 12px 24px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          position: relative;
+          z-index: 2;
+          transition: border-color 0.25s;
+        }
+        .cfc:hover .cfc-foot { border-color: rgba(200,148,26,0.25); }
+
+        .cfc-foot-label {
           font-family: 'DM Mono', monospace;
-          font-size: 9px; letter-spacing: 3px;
-          text-transform: uppercase; color: var(--c-muted);
+          font-size: 8px;
+          letter-spacing: 3px;
+          text-transform: uppercase;
+          color: #3A2808;
+          transition: color 0.2s;
+        }
+        .cfc:hover .cfc-foot-label { color: #7A5A14; }
+
+        .cfc-arrow {
+          font-family: 'DM Mono', monospace;
+          font-size: 14px;
+          color: rgba(200,148,26,0.3);
+          transform: translateX(0);
+          transition: transform 0.25s, color 0.25s;
+        }
+        .cfc:hover .cfc-arrow {
+          color: #C8941A;
+          transform: translateX(5px);
         }
       `}</style>
 
-      <Link href={`/compendium/${file.slug}`} className="cfc-wrap shimmer-card">
-        <div className="cfc-watermark" aria-hidden>
-          {String(index + 1).padStart(2, '0')}
-        </div>
+      <Link href={`/compendium/${file.slug}`} className="cfc">
 
-        {/* threat bar */}
-        <div style={{ height: '2px', width: '100%', background: 'var(--c-border)' }}>
-          <div style={{ height: '2px', width: fill, background: t.color, transition: 'width 0.4s' }} />
-        </div>
+        {/* top accent bar */}
+        <div
+          className="cfc-accent-bar"
+          style={{
+            background: `linear-gradient(90deg, transparent, ${accent.hue}, ${accent.hue}90, transparent)`,
+          }}
+        />
 
-        <div className="cfc-inner">
+        <div className="cfc-body">
           <div className="cfc-top">
-            <div className="cfc-badge" style={{ color: t.color, borderColor: t.color }}>
-              {file.threatLevel}
+            <div
+              className="cfc-glyph-wrap"
+              style={{ borderColor: `${accent.hue}35` }}
+            >
+              <span
+                className="cfc-glyph"
+                style={{ color: accent.hue }}
+              >
+                {accent.glyph}
+              </span>
             </div>
-            <div className="cfc-code">{file.classificationCode}</div>
+
+            <div className="cfc-meta">
+              <div className="cfc-num">{num}</div>
+              <div className="cfc-code">{file.classificationCode}</div>
+            </div>
           </div>
 
           <div className="cfc-title">{file.title}</div>
           <div className="cfc-subtitle">{file.subtitle}</div>
           <div className="cfc-dept">{file.department}</div>
-
-          <div className="cfc-meter-label">
-            <span className="cfc-meter-txt">Threat Meter</span>
-            <span className="cfc-meter-txt" style={{ color: t.color }}>{file.threatLevel}</span>
-          </div>
-          <div className="cfc-track">
-            <div style={{ position: 'absolute', inset: 0, width: fill, background: t.color }} />
-          </div>
 
           <div className="cfc-tags">
             {file.tags.map(tag => (
@@ -153,10 +306,11 @@ export default function CaseFileCard({ file, index = 0 }: Props) {
           </div>
         </div>
 
-        <div className="cfc-action">
-          <span className="cfc-action-txt">Access file</span>
-          <span style={{ color: 'var(--c-accent)', fontFamily: "'DM Mono', monospace", fontSize: '12px' }}>→</span>
+        <div className="cfc-foot">
+          <span className="cfc-foot-label">Access file</span>
+          <span className="cfc-arrow">→</span>
         </div>
+
       </Link>
     </>
   )
