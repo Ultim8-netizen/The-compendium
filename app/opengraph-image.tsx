@@ -15,196 +15,90 @@ export default function OGImage() {
           display: 'flex',
           position: 'relative',
           overflow: 'hidden',
-          background: '#050300',
+          background: '#0A0600',
         }}
       >
 
-        {/* ── PANEL 1: Gold — tall left column ── */}
+        {/* ── Deep gold-tinted base layer ── */}
         <div style={{
           position: 'absolute',
-          top: 0, left: 0,
-          width: 340, height: 630,
-          background: 'linear-gradient(170deg, #1c1300 0%, #2e1f00 40%, #0e0900 100%)',
+          inset: 0,
+          background: 'linear-gradient(160deg, #1A0F00 0%, #0D0800 35%, #060401 55%, #0F0A02 80%, #1C1200 100%)',
           display: 'flex',
-        }}>
-          {/* radial glow top-left */}
-          <div style={{
-            position: 'absolute', top: -60, left: -60,
-            width: 380, height: 380,
-            borderRadius: '50%',
-            background: 'radial-gradient(circle, rgba(255,215,0,0.22) 0%, transparent 70%)',
-            display: 'flex',
-          }} />
-          {/* shimmer diagonal streak */}
-          <div style={{
-            position: 'absolute', top: -40, left: 60,
-            width: 60, height: 800,
-            background: 'linear-gradient(90deg, transparent, rgba(255,215,0,0.08), transparent)',
-            transform: 'rotate(-18deg)',
-            display: 'flex',
-          }} />
-          <div style={{
-            position: 'absolute', top: -40, left: 140,
-            width: 20, height: 800,
-            background: 'linear-gradient(90deg, transparent, rgba(255,248,160,0.12), transparent)',
-            transform: 'rotate(-18deg)',
-            display: 'flex',
-          }} />
-          {/* bottom glow pool */}
-          <div style={{
-            position: 'absolute', bottom: -40, left: -40,
-            width: 340, height: 200,
-            background: 'radial-gradient(ellipse, rgba(200,148,26,0.18) 0%, transparent 70%)',
-            display: 'flex',
-          }} />
-          {/* right edge soft border */}
-          <div style={{
-            position: 'absolute', top: 0, right: 0,
-            width: 1, height: '100%',
-            background: 'linear-gradient(180deg, transparent, rgba(255,215,0,0.3) 30%, rgba(255,215,0,0.5) 60%, transparent)',
-            display: 'flex',
-          }} />
-        </div>
-
-        {/* ── PANEL 2: Rose — wide upper-right block ── */}
-        <div style={{
-          position: 'absolute',
-          top: 0, left: 340,
-          width: 500, height: 310,
-          background: 'linear-gradient(145deg, #110507 0%, #1e0810 50%, #080304 100%)',
-          display: 'flex',
-        }}>
-          <div style={{
-            position: 'absolute', top: -80, right: -80,
-            width: 420, height: 420,
-            borderRadius: '50%',
-            background: 'radial-gradient(circle, rgba(212,120,136,0.20) 0%, transparent 68%)',
-            display: 'flex',
-          }} />
-          <div style={{
-            position: 'absolute', top: 20, left: 80,
-            width: 30, height: 600,
-            background: 'linear-gradient(90deg, transparent, rgba(212,120,136,0.10), transparent)',
-            transform: 'rotate(12deg)',
-            display: 'flex',
-          }} />
-          <div style={{
-            position: 'absolute', top: 20, left: 200,
-            width: 80, height: 600,
-            background: 'linear-gradient(90deg, transparent, rgba(255,200,215,0.07), transparent)',
-            transform: 'rotate(12deg)',
-            display: 'flex',
-          }} />
-          <div style={{
-            position: 'absolute', bottom: 0, left: 0,
-            width: '100%', height: 1,
-            background: 'linear-gradient(90deg, transparent, rgba(212,120,136,0.4) 40%, rgba(212,120,136,0.6) 60%, transparent)',
-            display: 'flex',
-          }} />
-          <div style={{
-            position: 'absolute', top: 0, right: 0,
-            width: 1, height: '100%',
-            background: 'linear-gradient(180deg, transparent, rgba(212,120,136,0.35) 50%, transparent)',
-            display: 'flex',
-          }} />
-        </div>
-
-        {/* ── PANEL 3: Cobalt — tall right column ── */}
-        <div style={{
-          position: 'absolute',
-          top: 0, left: 840,
-          width: 360, height: 630,
-          background: 'linear-gradient(155deg, #020810 0%, #041220 45%, #010409 100%)',
-          display: 'flex',
-        }}>
-          <div style={{
-            position: 'absolute', top: -60, right: -60,
-            width: 360, height: 360,
-            borderRadius: '50%',
-            background: 'radial-gradient(circle, rgba(80,144,192,0.22) 0%, transparent 68%)',
-            display: 'flex',
-          }} />
-          <div style={{
-            position: 'absolute', top: -20, left: 30,
-            width: 25, height: 900,
-            background: 'linear-gradient(90deg, transparent, rgba(80,144,192,0.12), transparent)',
-            transform: 'rotate(-8deg)',
-            display: 'flex',
-          }} />
-          <div style={{
-            position: 'absolute', top: -20, left: 120,
-            width: 60, height: 900,
-            background: 'linear-gradient(90deg, transparent, rgba(160,210,250,0.07), transparent)',
-            transform: 'rotate(-8deg)',
-            display: 'flex',
-          }} />
-          <div style={{
-            position: 'absolute', bottom: -40, right: -40,
-            width: 340, height: 220,
-            background: 'radial-gradient(ellipse, rgba(60,120,180,0.16) 0%, transparent 70%)',
-            display: 'flex',
-          }} />
-          <div style={{
-            position: 'absolute', top: 0, left: 0,
-            width: 1, height: '100%',
-            background: 'linear-gradient(180deg, transparent, rgba(80,144,192,0.4) 40%, rgba(80,144,192,0.6) 65%, transparent)',
-            display: 'flex',
-          }} />
-        </div>
-
-        {/* ── PANEL 4: Obsidian — lower-center rectangle ── */}
-        <div style={{
-          position: 'absolute',
-          top: 310, left: 340,
-          width: 500, height: 320,
-          background: 'linear-gradient(135deg, #080614 0%, #0f0a20 50%, #04030a 100%)',
-          display: 'flex',
-        }}>
-          <div style={{
-            position: 'absolute', bottom: -60, left: '50%',
-            width: 400, height: 300,
-            borderRadius: '50%',
-            background: 'radial-gradient(circle, rgba(144,104,184,0.20) 0%, transparent 68%)',
-            transform: 'translateX(-50%)',
-            display: 'flex',
-          }} />
-          <div style={{
-            position: 'absolute', top: -10, left: 50,
-            width: 40, height: 500,
-            background: 'linear-gradient(90deg, transparent, rgba(144,104,184,0.10), transparent)',
-            transform: 'rotate(22deg)',
-            display: 'flex',
-          }} />
-          <div style={{
-            position: 'absolute', top: -10, left: 180,
-            width: 100, height: 500,
-            background: 'linear-gradient(90deg, transparent, rgba(200,175,240,0.07), transparent)',
-            transform: 'rotate(22deg)',
-            display: 'flex',
-          }} />
-          <div style={{
-            position: 'absolute', top: 0, left: 0,
-            width: '100%', height: 1,
-            background: 'linear-gradient(90deg, transparent, rgba(144,104,184,0.4) 40%, rgba(144,104,184,0.6) 60%, transparent)',
-            display: 'flex',
-          }} />
-          <div style={{
-            position: 'absolute', top: 0, right: 0,
-            width: 1, height: '100%',
-            background: 'linear-gradient(180deg, transparent, rgba(144,104,184,0.35) 50%, transparent)',
-            display: 'flex',
-          }} />
-        </div>
-
-        {/* ── Global dark vignette over all panels ── */}
-        <div style={{
-          position: 'absolute', inset: 0,
-          background: 'radial-gradient(ellipse at 50% 50%, transparent 30%, rgba(0,0,0,0.45) 100%)',
-          display: 'flex',
-          zIndex: 2,
         }} />
 
-        {/* ── THE COMPENDIUM title across all panels ── */}
+        {/* ── Central radial gleam — warm gold bloom from center-top ── */}
+        <div style={{
+          position: 'absolute',
+          top: -200,
+          left: '50%',
+          transform: 'translateX(-50%)',
+          width: 900,
+          height: 700,
+          borderRadius: '50%',
+          background: 'radial-gradient(ellipse, rgba(255,210,80,0.10) 0%, rgba(200,148,26,0.05) 40%, transparent 70%)',
+          display: 'flex',
+        }} />
+
+        {/* ── Sharp diagonal glint — upper-left to lower-right ── */}
+        <div style={{
+          position: 'absolute',
+          top: -100,
+          left: 200,
+          width: 3,
+          height: 1100,
+          background: 'linear-gradient(180deg, transparent 0%, rgba(255,235,120,0.22) 35%, rgba(255,248,180,0.35) 50%, rgba(255,235,120,0.22) 65%, transparent 100%)',
+          transform: 'rotate(-28deg)',
+          display: 'flex',
+        }} />
+
+        {/* ── Secondary glint — finer, offset right ── */}
+        <div style={{
+          position: 'absolute',
+          top: -100,
+          left: 480,
+          width: 1,
+          height: 1100,
+          background: 'linear-gradient(180deg, transparent 0%, rgba(255,248,180,0.12) 40%, rgba(255,255,200,0.20) 50%, rgba(255,248,180,0.12) 60%, transparent 100%)',
+          transform: 'rotate(-28deg)',
+          display: 'flex',
+        }} />
+
+        {/* ── Bottom warmth pool ── */}
+        <div style={{
+          position: 'absolute',
+          bottom: -80,
+          left: '50%',
+          transform: 'translateX(-50%)',
+          width: 800,
+          height: 300,
+          borderRadius: '50%',
+          background: 'radial-gradient(ellipse, rgba(180,120,10,0.10) 0%, transparent 70%)',
+          display: 'flex',
+        }} />
+
+        {/* ── Frame border ── */}
+        <div style={{
+          position: 'absolute',
+          top: 48, left: 64, right: 64, bottom: 48,
+          border: '0.5px solid rgba(255,215,0,0.25)',
+          display: 'flex',
+        }} />
+
+        {/* ── Corner ticks — top-left ── */}
+        <div style={{ position: 'absolute', top: 48, left: 64, width: 28, height: 1, background: 'rgba(255,215,0,0.7)', display: 'flex' }} />
+        <div style={{ position: 'absolute', top: 48, left: 64, width: 1, height: 28, background: 'rgba(255,215,0,0.7)', display: 'flex' }} />
+        {/* top-right */}
+        <div style={{ position: 'absolute', top: 48, right: 64, width: 28, height: 1, background: 'rgba(255,215,0,0.7)', display: 'flex' }} />
+        <div style={{ position: 'absolute', top: 48, right: 64, width: 1, height: 28, background: 'rgba(255,215,0,0.7)', display: 'flex' }} />
+        {/* bottom-left */}
+        <div style={{ position: 'absolute', bottom: 48, left: 64, width: 28, height: 1, background: 'rgba(255,215,0,0.7)', display: 'flex' }} />
+        <div style={{ position: 'absolute', bottom: 48, left: 64, width: 1, height: 28, background: 'rgba(255,215,0,0.7)', display: 'flex' }} />
+        {/* bottom-right */}
+        <div style={{ position: 'absolute', bottom: 48, right: 64, width: 28, height: 1, background: 'rgba(255,215,0,0.7)', display: 'flex' }} />
+        <div style={{ position: 'absolute', bottom: 48, right: 64, width: 1, height: 28, background: 'rgba(255,215,0,0.7)', display: 'flex' }} />
+
+        {/* ── Content: centered column ── */}
         <div style={{
           position: 'absolute',
           inset: 0,
@@ -212,67 +106,62 @@ export default function OGImage() {
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
-          zIndex: 10,
           gap: 0,
         }}>
-
-          {/* Dark backing plate so title reads over any panel */}
-          <div style={{
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            width: 1100,
-            height: 260,
-            background: 'radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0.72) 0%, transparent 75%)',
-            display: 'flex',
-          }} />
 
           {/* Eyebrow */}
           <div style={{
             fontFamily: '"Courier New", monospace',
-            fontSize: 11,
-            letterSpacing: 8,
+            fontSize: 13,
+            letterSpacing: 7,
             textTransform: 'uppercase',
             color: '#5A3E10',
-            marginBottom: 18,
+            marginBottom: 28,
             display: 'flex',
-            position: 'relative',
-            zIndex: 1,
           }}>
             ABYSSPROTOCOL &nbsp;·&nbsp; CLASSIFIED ARCHIVE
           </div>
 
-          {/* Main title */}
+          {/* THE */}
           <div style={{
             fontFamily: '"Courier New", monospace',
-            fontSize: 130,
+            fontSize: 148,
             fontWeight: 900,
-            lineHeight: 0.88,
-            letterSpacing: -3,
+            lineHeight: 1,
+            letterSpacing: -4,
             color: '#FFD700',
-            textAlign: 'center',
             display: 'flex',
-            position: 'relative',
-            zIndex: 1,
-            textShadow: '0 0 80px rgba(255,215,0,0.4)',
+            textShadow: '0 0 120px rgba(255,215,0,0.18)',
           }}>
-            THE<br />COMPENDIUM
+            THE
           </div>
 
-          {/* Rule */}
+          {/* COMPENDIUM */}
+          <div style={{
+            fontFamily: '"Courier New", monospace',
+            fontSize: 148,
+            fontWeight: 900,
+            lineHeight: 1,
+            letterSpacing: -4,
+            color: '#FFD700',
+            marginBottom: 28,
+            display: 'flex',
+            textShadow: '0 0 120px rgba(255,215,0,0.18)',
+          }}>
+            COMPENDIUM
+          </div>
+
+          {/* Rule + diamond */}
           <div style={{
             display: 'flex',
             alignItems: 'center',
-            gap: 16,
-            marginTop: 24,
-            width: 520,
-            position: 'relative',
-            zIndex: 1,
+            gap: 20,
+            width: 560,
+            marginBottom: 20,
           }}>
-            <div style={{ flex: 1, height: 1, background: 'linear-gradient(90deg, transparent, rgba(255,215,0,0.5))', display: 'flex' }} />
-            <div style={{ color: '#C8941A', fontSize: 9, display: 'flex' }}>◆</div>
-            <div style={{ flex: 1, height: 1, background: 'linear-gradient(90deg, rgba(255,215,0,0.5), transparent)', display: 'flex' }} />
+            <div style={{ flex: 1, height: 1, background: 'linear-gradient(90deg, transparent, rgba(255,215,0,0.45))', display: 'flex' }} />
+            <div style={{ color: '#C8941A', fontSize: 10, display: 'flex' }}>◆</div>
+            <div style={{ flex: 1, height: 1, background: 'linear-gradient(90deg, rgba(255,215,0,0.45), transparent)', display: 'flex' }} />
           </div>
 
           {/* Tagline */}
@@ -280,14 +169,11 @@ export default function OGImage() {
             fontFamily: '"Courier New", monospace',
             fontSize: 14,
             color: '#7A5A14',
-            letterSpacing: 3,
-            marginTop: 16,
+            letterSpacing: 4,
             textTransform: 'uppercase',
             display: 'flex',
-            position: 'relative',
-            zIndex: 1,
           }}>
-            Strange. True. None of it was asked for.
+            Strange &nbsp;·&nbsp; True &nbsp;·&nbsp; None of it was asked for
           </div>
 
         </div>
