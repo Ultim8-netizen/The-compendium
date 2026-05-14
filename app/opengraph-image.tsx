@@ -13,176 +13,164 @@ export default function OGImage() {
           width: 1200,
           height: 630,
           display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
           position: 'relative',
           overflow: 'hidden',
-          background: '#060401',
+          background: '#070500',
         }}
       >
 
-        {/* ── Base gradient — richer at center, dark at edges ── */}
+        {/* ── Base radial background — matches lp-root ── */}
         <div style={{
           position: 'absolute',
           inset: 0,
-          background: 'radial-gradient(ellipse 80% 70% at 50% 48%, #1E1200 0%, #0D0800 45%, #040200 100%)',
+          background: 'radial-gradient(ellipse 70% 60% at 50% 46%, #1E1200 0%, #0D0800 50%, #040200 100%)',
           display: 'flex',
         }} />
 
-        {/* ── Primary radial halo — sits directly behind the title ── */}
+        {/* ── Warm glow directly behind title ── */}
         <div style={{
           position: 'absolute',
-          top: 80,
+          top: 60,
           left: '50%',
-          transform: 'translateX(-50%)',
-          width: 860,
-          height: 500,
+          marginLeft: -480,
+          width: 960,
+          height: 520,
           borderRadius: '50%',
-          background: 'radial-gradient(ellipse, rgba(255,200,60,0.18) 0%, rgba(200,140,20,0.09) 45%, transparent 72%)',
+          background: 'radial-gradient(ellipse, rgba(200,148,26,0.22) 0%, rgba(160,100,10,0.10) 45%, transparent 70%)',
           display: 'flex',
         }} />
 
-        {/* ── Glint A — centered, tilted left ── */}
+        {/* ── Glint A ── */}
         <div style={{
           position: 'absolute',
-          top: -80,
+          top: -100,
           left: '50%',
-          marginLeft: -120,
+          marginLeft: -80,
+          width: 3,
+          height: 900,
+          background: 'linear-gradient(180deg, transparent 0%, rgba(255,235,120,0.10) 30%, rgba(255,252,190,0.35) 50%, rgba(255,235,120,0.10) 70%, transparent 100%)',
+          transform: 'rotate(-24deg)',
+          display: 'flex',
+        }} />
+
+        {/* ── Glint B ── */}
+        <div style={{
+          position: 'absolute',
+          top: -100,
+          left: '50%',
+          marginLeft: 40,
           width: 2,
-          height: 1100,
-          background: 'linear-gradient(180deg, transparent 0%, rgba(255,235,120,0.14) 30%, rgba(255,252,190,0.42) 50%, rgba(255,235,120,0.14) 70%, transparent 100%)',
-          transform: 'rotate(-26deg)',
+          height: 900,
+          background: 'linear-gradient(180deg, transparent 0%, rgba(255,235,120,0.07) 30%, rgba(255,252,190,0.22) 50%, rgba(255,235,120,0.07) 70%, transparent 100%)',
+          transform: 'rotate(24deg)',
           display: 'flex',
         }} />
 
-        {/* ── Glint A fine — same axis, thinner ── */}
+        {/* ── Brushed grain lines ── */}
         <div style={{
           position: 'absolute',
-          top: -80,
-          left: '50%',
-          marginLeft: -60,
-          width: 1,
-          height: 1100,
-          background: 'linear-gradient(180deg, transparent 0%, rgba(255,252,190,0.10) 35%, rgba(255,255,210,0.22) 50%, rgba(255,252,190,0.10) 65%, transparent 100%)',
-          transform: 'rotate(-26deg)',
-          display: 'flex',
-        }} />
-
-        {/* ── Glint B — mirrored right ── */}
-        <div style={{
-          position: 'absolute',
-          top: -80,
-          left: '50%',
-          marginLeft: 60,
-          width: 2,
-          height: 1100,
-          background: 'linear-gradient(180deg, transparent 0%, rgba(255,235,120,0.10) 30%, rgba(255,252,190,0.30) 50%, rgba(255,235,120,0.10) 70%, transparent 100%)',
-          transform: 'rotate(26deg)',
-          display: 'flex',
-        }} />
-
-        {/* ── Bottom warmth pool ── */}
-        <div style={{
-          position: 'absolute',
-          bottom: -60,
-          left: '50%',
-          transform: 'translateX(-50%)',
-          width: 700,
-          height: 260,
-          borderRadius: '50%',
-          background: 'radial-gradient(ellipse, rgba(160,100,8,0.12) 0%, transparent 70%)',
+          inset: 0,
+          backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(200,148,26,0.012) 3px, rgba(200,148,26,0.012) 4px)',
           display: 'flex',
         }} />
 
         {/* ── Frame border ── */}
         <div style={{
           position: 'absolute',
-          top: 44, left: 60, right: 60, bottom: 44,
-          border: '0.5px solid rgba(255,215,0,0.20)',
+          top: 36, left: 52, right: 52, bottom: 36,
+          border: '0.5px solid rgba(200,148,26,0.18)',
           display: 'flex',
         }} />
 
         {/* ── Corner ticks — top-left ── */}
-        <div style={{ position: 'absolute', top: 44, left: 60, width: 32, height: 1, background: 'rgba(255,215,0,0.65)', display: 'flex' }} />
-        <div style={{ position: 'absolute', top: 44, left: 60, width: 1, height: 32, background: 'rgba(255,215,0,0.65)', display: 'flex' }} />
+        <div style={{ position: 'absolute', top: 36, left: 52, width: 28, height: 1, background: 'rgba(255,215,0,0.55)', display: 'flex' }} />
+        <div style={{ position: 'absolute', top: 36, left: 52, width: 1, height: 28, background: 'rgba(255,215,0,0.55)', display: 'flex' }} />
         {/* top-right */}
-        <div style={{ position: 'absolute', top: 44, right: 60, width: 32, height: 1, background: 'rgba(255,215,0,0.65)', display: 'flex' }} />
-        <div style={{ position: 'absolute', top: 44, right: 60, width: 1, height: 32, background: 'rgba(255,215,0,0.65)', display: 'flex' }} />
+        <div style={{ position: 'absolute', top: 36, right: 52, width: 28, height: 1, background: 'rgba(255,215,0,0.55)', display: 'flex' }} />
+        <div style={{ position: 'absolute', top: 36, right: 52, width: 1, height: 28, background: 'rgba(255,215,0,0.55)', display: 'flex' }} />
         {/* bottom-left */}
-        <div style={{ position: 'absolute', bottom: 44, left: 60, width: 32, height: 1, background: 'rgba(255,215,0,0.65)', display: 'flex' }} />
-        <div style={{ position: 'absolute', bottom: 44, left: 60, width: 1, height: 32, background: 'rgba(255,215,0,0.65)', display: 'flex' }} />
+        <div style={{ position: 'absolute', bottom: 36, left: 52, width: 28, height: 1, background: 'rgba(255,215,0,0.55)', display: 'flex' }} />
+        <div style={{ position: 'absolute', bottom: 36, left: 52, width: 1, height: 28, background: 'rgba(255,215,0,0.55)', display: 'flex' }} />
         {/* bottom-right */}
-        <div style={{ position: 'absolute', bottom: 44, right: 60, width: 32, height: 1, background: 'rgba(255,215,0,0.65)', display: 'flex' }} />
-        <div style={{ position: 'absolute', bottom: 44, right: 60, width: 1, height: 32, background: 'rgba(255,215,0,0.65)', display: 'flex' }} />
+        <div style={{ position: 'absolute', bottom: 36, right: 52, width: 28, height: 1, background: 'rgba(255,215,0,0.55)', display: 'flex' }} />
+        <div style={{ position: 'absolute', bottom: 36, right: 52, width: 1, height: 28, background: 'rgba(255,215,0,0.55)', display: 'flex' }} />
 
-        {/* ── Content: centered column ── */}
+        {/* ── Content column ── */}
         <div style={{
-          position: 'absolute',
-          inset: 0,
+          position: 'relative',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
+          gap: 0,
+          zIndex: 10,
+          width: '100%',
+          padding: '0 80px',
         }}>
 
-          {/* Eyebrow — ABYSSPROTOCOL stamp */}
+          {/* Eyebrow */}
           <div style={{
             fontFamily: '"Courier New", monospace',
             fontSize: 11,
-            letterSpacing: 8,
+            letterSpacing: 7,
             textTransform: 'uppercase',
-            color: '#9A7422',
-            marginBottom: 32,
+            color: '#7A5A14',
+            marginBottom: 28,
             display: 'flex',
           }}>
             ABYSSPROTOCOL &nbsp;·&nbsp; CLASSIFIED ARCHIVE
           </div>
 
-          {/* "THE" — demoted, spaced, treated as a subtitle above the hero word */}
+          {/* THE */}
           <div style={{
             fontFamily: '"Courier New", monospace',
-            fontSize: 36,
+            fontSize: 28,
             fontWeight: 400,
-            letterSpacing: 22,
+            letterSpacing: 24,
             textTransform: 'uppercase',
             color: '#C8941A',
-            marginBottom: 6,
+            marginBottom: 2,
             display: 'flex',
           }}>
             THE
           </div>
 
-          {/* "COMPENDIUM" — the hero word */}
+          {/* COMPENDIUM — sized to fit the 1200px canvas safely */}
           <div style={{
             fontFamily: '"Courier New", monospace',
-            fontSize: 152,
+            fontSize: 118,
             fontWeight: 900,
             lineHeight: 1,
-            letterSpacing: -3,
+            letterSpacing: -2,
             color: '#FFD700',
-            marginBottom: 36,
             display: 'flex',
-            textShadow: '0 0 80px rgba(255,215,0,0.45), 0 0 160px rgba(255,180,0,0.20)',
+            textShadow: '0 0 60px rgba(255,215,0,0.40), 0 0 120px rgba(255,180,0,0.18)',
           }}>
             COMPENDIUM
           </div>
 
-          {/* Rule + diamond */}
+          {/* Rule */}
           <div style={{
             display: 'flex',
             alignItems: 'center',
-            gap: 18,
-            width: 520,
-            marginBottom: 22,
+            gap: 16,
+            width: 480,
+            marginTop: 30,
+            marginBottom: 20,
           }}>
-            <div style={{ flex: 1, height: 1, background: 'linear-gradient(90deg, transparent, rgba(255,215,0,0.40))', display: 'flex' }} />
-            <div style={{ color: '#C8941A', fontSize: 9, display: 'flex' }}>◆</div>
-            <div style={{ flex: 1, height: 1, background: 'linear-gradient(90deg, rgba(255,215,0,0.40), transparent)', display: 'flex' }} />
+            <div style={{ flex: 1, height: 1, background: 'linear-gradient(90deg, transparent, rgba(200,148,26,0.5))', display: 'flex' }} />
+            <div style={{ color: '#C8941A', fontSize: 8, display: 'flex' }}>◆</div>
+            <div style={{ flex: 1, height: 1, background: 'linear-gradient(90deg, rgba(200,148,26,0.5), transparent)', display: 'flex' }} />
           </div>
 
           {/* Tagline */}
           <div style={{
             fontFamily: '"Courier New", monospace',
             fontSize: 13,
-            color: '#8A6820',
+            color: '#7A5A14',
             letterSpacing: 5,
             textTransform: 'uppercase',
             display: 'flex',
@@ -190,6 +178,28 @@ export default function OGImage() {
             Strange &nbsp;·&nbsp; True &nbsp;·&nbsp; None of it was asked for
           </div>
 
+        </div>
+
+        {/* ── Bottom byline ── */}
+        <div style={{
+          position: 'absolute',
+          bottom: 56,
+          display: 'flex',
+          alignItems: 'center',
+          gap: 16,
+        }}>
+          <div style={{ width: 24, height: 1, background: '#2A1808', display: 'flex' }} />
+          <div style={{
+            fontFamily: '"Courier New", monospace',
+            fontSize: 9,
+            letterSpacing: 5,
+            textTransform: 'uppercase',
+            color: '#2A1808',
+            display: 'flex',
+          }}>
+            ABYSSPROTOCOL
+          </div>
+          <div style={{ width: 24, height: 1, background: '#2A1808', display: 'flex' }} />
         </div>
 
       </div>
